@@ -1,0 +1,97 @@
+{
+  "meta": {
+    "file": "replay_candidates_2026-10-10.json",
+    "generated_at": "2026-10-10T12:40:00Z",
+    "purpose": "Selected FloodNet events for the PLUVIA replay prototype. These are the events the demo replays; the candidate pool they were drawn from is in data/nyc/raw/floodnet_events_2026_0101plus.json (25-row >=5in pool, September 2026).",
+    "selection_criteria": [
+      "tidally_influenced = No (verified per sensor against kb2e-tjy3 on 2026-10-10) so the replay shows rainfall-driven, not tide-driven, street flooding",
+      "event has a published flood_profile_depth_inches and flood_profile_time_secs with length parity (verified, see qc/floodnet_qc_log_2026-10-10.json)",
+      "event is QC-plausible: onset <= duration sanity held; the single citywide onset-outlier row (BK Hoyt St 2023-09-29) is excluded and recorded in the QC log",
+      "sensor has stable 2026 history (no gap-fabrication: sensors missing data on a day are NOT counted as dry)"
+    ],
+    "non_claim": "These three events do not by themselves establish general citywide risk. They are point measurements at three specific non-tidal locations during one rain event (2026-09-26). Demo narration must say 'what three sensors recorded', never 'what NYC experiences'.",
+    "evidence_label_rule": "measured = published sensor measurement; forecast = model input from Open-Meteo; reported = 311 complaint; inferred = PLUVIA computation over the above; unavailable = explicitly missing. Missing is never coerced to zero or 'no flooding'."
+  },
+  "selected": [
+    {
+      "rank": "R1-primary",
+      "sensor_id": "Q-160th-ave-101st-st-2vfj80",
+      "sensor_name": "Q - 101st St/160th Ave",
+      "event_start_utc": "2026-09-26T10:18:58.000",
+      "event_end_utc": "2026-09-26T15:10:55.000",
+      "max_depth_inches": 19.8,
+      "onset_time_mins": 138.98,
+      "drain_time_mins": 152.97,
+      "duration_mins": 291.95,
+      "duration_above_4_inches_mins": 255.44,
+      "duration_above_12_inches_mins": 168.43,
+      "duration_above_24_inches_mins": 0,
+      "tidally_influenced": "No",
+      "evidence_label": "measured",
+      "profile": "data/nyc/raw/floodnet_replay_profiles_2026-10-10.json rows[0] (288 depth / 288 time points, parity verified)",
+      "why": "Deepest 2026 event in the pool window; long rise and drain; installed 2026-04-03 so multi-month record incl. two more >=5in events (2026-09-27 15.0in, 2026-09-28 5.51in) that let the demo show repeat-stress at one corner.",
+      "history_note": "Sensor record starts 2026-04-03; absence before that is 'unavailable', not 'never floods'."
+    },
+    {
+      "rank": "R2",
+      "sensor_id": "BK-w-st-kent-st-31i7yc",
+      "sensor_name": "BK - Kent St/West St",
+      "event_start_utc": "2026-09-26T12:13:32.000",
+      "event_end_utc": "2026-09-26T15:19:32.000",
+      "max_depth_inches": 11.26,
+      "onset_time_mins": 96,
+      "drain_time_mins": 90.01,
+      "duration_mins": 186,
+      "duration_above_4_inches_mins": 139.1,
+      "duration_above_12_inches_mins": 0,
+      "duration_above_24_inches_mins": 0,
+      "tidally_influenced": "No",
+      "evidence_label": "measured",
+      "profile": "data/nyc/raw/floodnet_replay_profiles_2026-10-10.json rows[1] (182 depth / 182 time points, parity verified)",
+      "why": "Brooklyn-Williamsburg contrast case: same storm, shallower and faster; shows PLUVIA comparing two neighbourhoods honestly.",
+      "history_note": "CAUTION: installed 2026-07-30, so ~2 months of record at snapshot time. Demo must not describe this location as 'rarely floods'."
+    },
+    {
+      "rank": "R3",
+      "sensor_id": "Q-norton-ave-beach-45th-st-2vfj80",
+      "sensor_name": "Q - Norton Ave/Beach 45th St",
+      "event_start_utc": "2026-09-26T11:55:03.000",
+      "event_end_utc": "2026-09-26T14:16:04.000",
+      "max_depth_inches": 6.81,
+      "onset_time_mins": 61,
+      "drain_time_mins": 80,
+      "duration_mins": 141.01,
+      "duration_above_4_inches_mins": 91.7,
+      "duration_above_12_inches_mins": 0,
+      "duration_above_24_inches_mins": 0,
+      "tidally_influenced": "No",
+      "evidence_label": "measured",
+      "profile": "data/nyc/raw/floodnet_replay_profiles_2026-10-10.json rows[2] (140 depth / 140 time points, parity verified)",
+      "why": "Rockaway case adjacent to heavily tidal neighbours (Beach-channel sensors, all tidally_influenced=Yes and excluded): lets the demo explicitly separate 'rain ponding' from 'tide-influenced' records.",
+      "history_note": "Installed 2026-04-03; neighbouring tidal sensors excluded from the rainfall replay pool."
+    },
+    {
+      "rank": "backup",
+      "sensor_id": "SI-murray-hulbert-ave-bay-st-2upklc",
+      "sensor_name": "SI - Bay St/Front St",
+      "event_start_utc": "2026-09-01T22:30:40.000",
+      "event_end_utc": "2026-09-02T00:26:38.000",
+      "max_depth_inches": 8.94,
+      "onset_time_mins": 11.99,
+      "drain_time_mins": 103.96,
+      "duration_mins": 115.96,
+      "duration_above_4_inches_mins": 35.12,
+      "duration_above_12_inches_mins": 0,
+      "duration_above_24_inches_mins": 0,
+      "tidally_influenced": "No",
+      "evidence_label": "measured",
+      "profile": "not stored in repo; row verbatim in data/nyc/raw/floodnet_events_2026_0101plus.json; profile arrays fetchable via scripts/fetch_snapshot.py --profile SI-murray-hulbert-ave-bay-st-2upklc 2026-09-01T22:30:40.000",
+      "why": "Staten Island flash case (11.99 min to onset): fastest riser captured; held in reserve if a fourth panel is wanted.",
+      "history_note": "Same-day SI neighbours (Minthorne 13.43in, Hamden, Grimsby) are tidally_influenced=Yes and were excluded; Richmond Terrace did not cross 5in that night. A 4.45in reading is a real flood under the 10mm event definition, it simply sits below the pool's >=5in line."
+    }
+  ],
+  "rejected_examples": [
+    {"sensor_id": "BX-ditmars-st-hunter-ave-1kwrk0", "reason": "tidally_influenced=Yes (1081.87 min duration on 2026-09-27 is a compound rain+tidal signal; unusable for a rainfall-only replay)"},
+    {"sensor_id": "BK-hoyt-st-5th-st-007sk0", "reason": "2023-09-29T07:23:34 row has onset_time_mins 1,579,176.5 vs duration 812.31: implausible, excluded per QC log; outside 2026 window anyway"}
+  ]
+}

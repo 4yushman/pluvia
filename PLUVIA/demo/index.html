@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#102a43">
+    <meta name="description" content="A sourced PLUVIA replay of one historical FloodNet event.">
+    <title>PLUVIA | FloodNet event replay</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="site-header">
+        <a class="brand" href="#top" aria-label="PLUVIA home">
+          <span class="brand-mark" aria-hidden="true">P</span>
+          <span class="brand-copy">
+            <strong>PLUVIA</strong>
+            <span>Know the Impact, Not Just the Rain.</span>
+          </span>
+        </a>
+        <span class="header-note">NYC · FloodNet replay</span>
+      </header>
+
+      <main id="top">
+        <section class="load-panel" aria-labelledby="page-title">
+          <div class="eyebrow"><span class="eyebrow-dot"></span> A single historical event</div>
+          <h1 id="page-title">See what the sensor recorded.</h1>
+          <p class="intro-copy">Open the generated card file to view the R1 event. This page reads only that JSON file.</p>
+          <div class="load-row">
+            <button id="choose-file" class="load-button" type="button">Open card_data.json</button>
+            <input id="card-file" class="visually-hidden" type="file" accept=".json,application/json">
+            <span class="load-hint">Choose <code>PLUVIA/demo/card_data.json</code></span>
+          </div>
+          <p id="load-status" class="load-status" role="status" aria-live="polite">No event card loaded yet.</p>
+        </section>
+
+        <section id="card-region" class="card-region" aria-live="polite" aria-label="FloodNet event card"></section>
+      </main>
+
+      <footer class="site-footer">
+        <span>PLUVIA</span>
+        <span>Historical evidence, shown with its limits.</span>
+      </footer>
+    </div>
+  </body>
+</html>
