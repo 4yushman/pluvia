@@ -1,150 +1,201 @@
 #!/usr/bin/env python3
-"""Build the single-event PLUVIA card payload from the frozen FloodNet snapshots."""
+"""Build the local PLUVIA event selector payload from frozen NYC snapshots."""
 
+import hashlib
 import json
 import math
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
+DEMO = Path(__file__).resolve().parent
+MANIFEST_PATH = ROOT / "data/nyc/MANIFEST.json"
 CANDIDATES_PATH = ROOT / "data/nyc/selected/replay_candidates_2026-10-10.json"
 PROFILES_PATH = ROOT / "data/nyc/raw/floodnet_replay_profiles_2026-10-10.json"
-OUTPUT_PATH = Path(__file__).resolve().parent / "card_data.json"
-PRIMARY_RANK = "R1-primary"
+SENSORS_PATH = ROOT / "data/nyc/raw/floodnet_sensors_2026-10-10.json"
+OUTPUT_PATH = DEMO / "card_data.json"
+DEFAULT_EVENT_ID = "R1-primary"
 
 
-def load_json(path):
+def read_json(path):
     with path.open(encoding="utf-8") as stream:
         return json.load(stream)
 
 
-def as_array(value, field_name):
-    if isinstance(value, str):
-        value = json.loads(value)
-    if not isinstance(value, list):
-        raise ValueError(f"{field_name} must be a JSON array")
+def number(value, name):
+    if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value):
+        raise ValueError(f"{name} must be a finite snapshot number")
     return value
 
 
-def number(value, field_name):
-    if isinstance(value, bool) or not isinstance(value, (int, float)):
-        raise ValueError(f"{field_name} contains a non-numeric value")
-    if not math.isfinite(value):
-        raise ValueError(f"{field_name} contains a non-finite value")
+def as_array(value, name):
+    if isinstance(value, str):
+        value = json.loads(value)
+    if not isinstance(value, list):
+        raise ValueError(f"{name} must be an array")
     return value
 
 
 def utc_iso(value):
-    """The source fields are UTC; add an explicit zone without changing the instant."""
-    return value if value.endswith("Z") else f"{value}Z"
+    return value if value.endswith("Z") else value + "Z"
 
 
-def build_card():
-    candidates = load_json(CANDIDATES_PATH)
-    profiles = load_json(PROFILES_PATH)
+def verify_manifest(manifest):
+    files = {item["path"]: item for item in manifest["files"]}
+    inputs = (CANDIDATES_PATH, PROFILES_PATH, SENSORS_PATH)
+    for path in inputs:
+        relative = path.relative_to(ROOT).as_posix()
+        expected = files[relative]["sha256"]
+        actual = hashlib.sha256(path.read_bytes()).hexdigest()
+        if actual != expected:
+            raise ValueError(f"Snapshot hash mismatch: {relative}")
+    return files
 
-    selected = [
-        row for row in candidates.get("selected", [])
-        if row.get("rank") == PRIMARY_RANK
-    ]
-    if len(selected) != 1:
-        raise ValueError(f"Expected exactly one {PRIMARY_RANK} selection")
-    event = selected[0]
 
-    matching_profiles = [
-        row for row in profiles.get("rows", [])
-        if row.get("sensor_id") == event.get("sensor_id")
-        and row.get("flood_start_time") == event.get("event_start_utc")
-    ]
-    if len(matching_profiles) != 1:
-        raise ValueError("Expected exactly one matching R1 profile row")
-    profile_row = matching_profiles[0]
-
-    for source_field, profile_field in (
-        ("sensor_name", "sensor_name"),
-        ("event_end_utc", "flood_end_time"),
-        ("max_depth_inches", "max_depth_inches"),
-        ("duration_mins", "duration_mins"),
-        ("tidally_influenced", "tidally_influenced"),
-        ("evidence_label", "evidence_label"),
-    ):
-        if event.get(source_field) != profile_row.get(profile_field):
-            raise ValueError(f"Candidate/profile mismatch for {source_field}")
-
-    if event.get("tidally_influenced") != "No":
-        raise ValueError("R1 must be verified as non-tidal")
-    if event.get("evidence_label") != "measured":
-        raise ValueError("R1 must retain its measured evidence label")
-
-    depths = as_array(
-        profile_row.get("flood_profile_depth_inches"),
-        "flood_profile_depth_inches",
-    )
-    times = as_array(
-        profile_row.get("flood_profile_time_secs"),
-        "flood_profile_time_secs",
-    )
+def make_profile(row, candidate):
+    depths = as_array(row["flood_profile_depth_inches"], "profile depths")
+    times = as_array(row["flood_profile_time_secs"], "profile times")
     if len(depths) != len(times):
-        raise ValueError("Profile depth/time arrays have different lengths")
-    if len(depths) != 288:
-        raise ValueError(f"Expected the verified 288 profile points, got {len(depths)}")
+        raise ValueError(f"Profile array lengths differ for {candidate['rank']}")
 
-    profile = []
+    points = []
+    observed_depths = []
     previous_time = None
-    valid_depths = []
-    for index, (elapsed_seconds, depth_inches) in enumerate(zip(times, depths)):
-        elapsed_seconds = number(elapsed_seconds, f"profile time at index {index}")
-        if previous_time is not None and elapsed_seconds <= previous_time:
-            raise ValueError("Profile times must be strictly increasing")
-        previous_time = elapsed_seconds
-
-        if depth_inches is None:
-            # Keep missing measurements explicit so the renderer can leave a gap.
-            profile.append({"elapsedSeconds": elapsed_seconds, "depthInches": None})
+    for index, (seconds, depth) in enumerate(zip(times, depths)):
+        seconds = number(seconds, f"profile time {index}")
+        if previous_time is not None and seconds <= previous_time:
+            raise ValueError(f"Profile time is not increasing for {candidate['rank']}")
+        previous_time = seconds
+        if depth is None:
+            points.append({"elapsedSeconds": seconds, "depthInches": None})
             continue
-        depth_inches = number(depth_inches, f"profile depth at index {index}")
-        if depth_inches < 0:
-            raise ValueError("Profile depths cannot be negative")
-        valid_depths.append(depth_inches)
-        profile.append({
-            "elapsedSeconds": elapsed_seconds,
-            "depthInches": depth_inches,
-        })
+        depth = number(depth, f"profile depth {index}")
+        if depth < 0:
+            raise ValueError(f"Negative depth in {candidate['rank']}")
+        observed_depths.append(depth)
+        points.append({"elapsedSeconds": seconds, "depthInches": depth})
 
-    max_depth = number(event.get("max_depth_inches"), "max_depth_inches")
-    if not valid_depths or not math.isclose(max(valid_depths), max_depth, abs_tol=0.01):
-        raise ValueError("Profile maximum does not match the published event maximum")
+    if not points or not observed_depths:
+        raise ValueError(f"No measured profile values for {candidate['rank']}")
+    maximum = number(candidate["max_depth_inches"], "max_depth_inches")
+    if not math.isclose(max(observed_depths), maximum, abs_tol=0.01):
+        raise ValueError(f"Profile maximum does not match {candidate['rank']}")
+    duration = number(candidate["duration_mins"], "duration_mins")
+    if not math.isclose(points[-1]["elapsedSeconds"] / 60, duration, abs_tol=0.01):
+        raise ValueError(f"Profile endpoint does not match {candidate['rank']} duration")
+    return points
 
-    candidate_meta = candidates.get("meta", {})
-    profile_meta = profiles.get("meta", {})
-    if candidate_meta.get("generated_at") != profile_meta.get("generated_at"):
-        raise ValueError("Candidate and profile snapshot timestamps do not match")
 
-    source_url = profile_meta.get("source_url")
-    snapshot_as_of = profile_meta.get("generated_at")
-    updated_at = profile_meta.get("dataset_rows_updated_at")
-    if not source_url or not snapshot_as_of or not updated_at:
-        raise ValueError("Profile snapshot is missing source/as-of metadata")
+def build_event(candidate, profile_rows, sensor_rows):
+    sensor_id = candidate["sensor_id"]
+    start = candidate["event_start_utc"]
+    matching = [
+        row for row in profile_rows
+        if row.get("sensor_id") == sensor_id and row.get("flood_start_time") == start
+    ]
+    if len(matching) > 1:
+        raise ValueError(f"Duplicate profile rows for {candidate['rank']}")
+    profile_row = matching[0] if matching else None
+    sensor = sensor_rows.get(sensor_id)
+
+    if sensor and sensor.get("sensor_name") != candidate.get("sensor_name"):
+        raise ValueError(f"Sensor metadata name mismatch for {candidate['rank']}")
+    if candidate.get("tidally_influenced") != "No":
+        raise ValueError(f"Unexpected tidal sensor in rainfall replay: {candidate['rank']}")
+
+    profile = None
+    profile_status = "unavailable"
+    if profile_row:
+        for candidate_field, profile_field in (
+            ("sensor_name", "sensor_name"),
+            ("event_end_utc", "flood_end_time"),
+            ("max_depth_inches", "max_depth_inches"),
+            ("duration_mins", "duration_mins"),
+            ("evidence_label", "evidence_label"),
+        ):
+            if candidate.get(candidate_field) != profile_row.get(profile_field):
+                raise ValueError(f"Candidate/profile mismatch for {candidate_field}")
+        profile = make_profile(profile_row, candidate)
+        profile_status = "available"
+
+    latitude = sensor.get("latitude") if sensor else None
+    longitude = sensor.get("longitude") if sensor else None
+    if latitude is not None:
+        latitude = number(latitude, f"{candidate['rank']} latitude")
+    if longitude is not None:
+        longitude = number(longitude, f"{candidate['rank']} longitude")
 
     return {
-        "event": {
-            "sensorId": event["sensor_id"],
-            "sensorName": event["sensor_name"],
-            "startUtc": utc_iso(event["event_start_utc"]),
-            "endUtc": utc_iso(event["event_end_utc"]),
-            "maxDepthIn": max_depth,
-            "durationMin": number(event["duration_mins"], "duration_mins"),
-            "onsetMin": number(event["onset_time_mins"], "onset_time_mins"),
-            "drainMin": number(event["drain_time_mins"], "drain_time_mins"),
-            "tidalInfluence": event["tidally_influenced"],
-            "evidenceLabel": event["evidence_label"],
-            "profile": profile,
+        "eventId": candidate["rank"],
+        "rank": candidate["rank"],
+        "sensorId": sensor_id,
+        "sensorName": candidate["sensor_name"],
+        "startUtc": utc_iso(start),
+        "endUtc": utc_iso(candidate["event_end_utc"]),
+        "maxDepthIn": number(candidate["max_depth_inches"], "max_depth_inches"),
+        "durationMin": number(candidate["duration_mins"], "duration_mins"),
+        "onsetMin": number(candidate["onset_time_mins"], "onset_time_mins"),
+        "drainMin": number(candidate["drain_time_mins"], "drain_time_mins"),
+        "durationAbove4InMin": number(candidate["duration_above_4_inches_mins"], "duration_above_4_inches_mins"),
+        "durationAbove12InMin": number(candidate["duration_above_12_inches_mins"], "duration_above_12_inches_mins"),
+        "durationAbove24InMin": number(candidate["duration_above_24_inches_mins"], "duration_above_24_inches_mins"),
+        "tidalInfluence": candidate["tidally_influenced"],
+        "evidenceLabel": candidate["evidence_label"],
+        "profileStatus": profile_status,
+        "profile": profile,
+        "historyNote": candidate.get("history_note"),
+        "location": {
+            "latitude": latitude,
+            "longitude": longitude,
+            "borough": sensor.get("borough") if sensor else None,
+            "communityBoard": sensor.get("community_board") if sensor else None,
+            "zipcode": sensor.get("zipcode") if sensor else None,
         },
+    }
+
+
+def build_card_data():
+    manifest = read_json(MANIFEST_PATH)
+    candidates = read_json(CANDIDATES_PATH)
+    profiles = read_json(PROFILES_PATH)
+    sensors = read_json(SENSORS_PATH)
+    manifest_files = verify_manifest(manifest)
+
+    profile_meta = profiles["meta"]
+    sensor_meta = sensors["meta"]
+    if not (
+        candidates["meta"]["generated_at"]
+        == profile_meta["generated_at"]
+        == sensor_meta["generated_at"]
+        == manifest["generated_at"]
+    ):
+        raise ValueError("Snapshot capture timestamps do not match")
+
+    sensor_rows = {row["sensor_id"]: row for row in sensors["selected_sensor_rows"]}
+    events = [
+        build_event(row, profiles["rows"], sensor_rows)
+        for row in candidates["selected"]
+    ]
+    if not events or events[0]["eventId"] != DEFAULT_EVENT_ID:
+        raise ValueError("Expected the canonical R1 event first in the snapshot")
+
+    sensor_manifest = manifest_files[SENSORS_PATH.relative_to(ROOT).as_posix()]
+    sensor_updated_at = sensor_manifest["dataset_rows_updated_at"].split()[0]
+    return {
+        "defaultEventId": DEFAULT_EVENT_ID,
+        "events": events,
         "provenance": {
             "dataset": "FloodNet NYC via NYC Open Data",
             "datasetId": "aq7i-eu5q",
-            "url": source_url,
-            "snapshotAsOf": snapshot_as_of,
-            "updatedAt": updated_at,
+            "url": profile_meta["source_url"],
+            "snapshotAsOf": profile_meta["generated_at"],
+            "updatedAt": profile_meta["dataset_rows_updated_at"],
+        },
+        "mapProvenance": {
+            "dataset": "FloodNet sensor deployment metadata via NYC Open Data",
+            "datasetId": "kb2e-tjy3",
+            "url": sensor_meta["source_url"],
+            "snapshotAsOf": sensor_meta["generated_at"],
+            "updatedAt": sensor_updated_at,
         },
         "context": {
             "weather": {
@@ -162,29 +213,32 @@ def build_card():
                 "status": "not_used",
                 "reason": "No present-condition or passability inference is made.",
             },
-            "refusalNote": "This card replays one historical FloodNet record. It does not establish present road passability or drainage condition, and it says nothing about locations without a selected sensor record.",
+            "refusalNote": "This view shows selected historical FloodNet sensor records only. It does not establish present road passability or drainage condition, and it does not describe locations without a selected sensor record.",
         },
     }
 
 
 def main():
-    card = build_card()
-    OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
+    card = build_card_data()
     with OUTPUT_PATH.open("w", encoding="utf-8") as stream:
         json.dump(card, stream, indent=2, ensure_ascii=False)
         stream.write("\n")
-
-    event = card["event"]
+    available = sum(event["profileStatus"] == "available" for event in card["events"])
+    located = sum(
+        event["location"]["latitude"] is not None
+        and event["location"]["longitude"] is not None
+        for event in card["events"]
+    )
+    primary = card["events"][0]
     print(f"Wrote {OUTPUT_PATH.relative_to(ROOT)}")
+    print(f"Selected snapshot events: {len(card['events'])}; profiles available: {available}; coordinate points: {located}")
     print(
-        f"Event: {event['sensorName']} | {event['startUtc']} | "
-        f"max {event['maxDepthIn']:.2f} in | "
-        f"duration {event['durationMin']:.2f} min | "
-        f"profile points {len(event['profile'])}"
+        f"Default: {primary['sensorName']} | max {primary['maxDepthIn']:.2f} in | "
+        f"duration {primary['durationMin']:.2f} min | profile points {len(primary['profile'])}"
     )
     print(
         f"As of: {card['provenance']['snapshotAsOf']} | "
-        f"dataset updated {card['provenance']['updatedAt']}"
+        f"event dataset updated {card['provenance']['updatedAt']}"
     )
 
 

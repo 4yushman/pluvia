@@ -1,1174 +1,2569 @@
 {
-  "event": {
-    "sensorId": "Q-160th-ave-101st-st-2vfj80",
-    "sensorName": "Q - 101st St/160th Ave",
-    "startUtc": "2026-09-26T10:18:58.000Z",
-    "endUtc": "2026-09-26T15:10:55.000Z",
-    "maxDepthIn": 19.8,
-    "durationMin": 291.95,
-    "onsetMin": 138.98,
-    "drainMin": 152.97,
-    "tidalInfluence": "No",
-    "evidenceLabel": "measured",
-    "profile": [
-      {
-        "elapsedSeconds": 0,
-        "depthInches": 0.0
-      },
-      {
-        "elapsedSeconds": 60,
-        "depthInches": 0.63
-      },
-      {
-        "elapsedSeconds": 120,
-        "depthInches": 0.67
-      },
-      {
-        "elapsedSeconds": 180,
-        "depthInches": 0.91
-      },
-      {
-        "elapsedSeconds": 240,
-        "depthInches": 1.61
-      },
-      {
-        "elapsedSeconds": 300,
-        "depthInches": 2.01
-      },
-      {
-        "elapsedSeconds": 360,
-        "depthInches": 2.13
-      },
-      {
-        "elapsedSeconds": 420,
-        "depthInches": 2.68
-      },
-      {
-        "elapsedSeconds": 480,
-        "depthInches": 2.8
-      },
-      {
-        "elapsedSeconds": 540,
-        "depthInches": 2.91
-      },
-      {
-        "elapsedSeconds": 600,
-        "depthInches": 3.15
-      },
-      {
-        "elapsedSeconds": 660,
-        "depthInches": 3.39
-      },
-      {
-        "elapsedSeconds": 720,
-        "depthInches": 3.5
-      },
-      {
-        "elapsedSeconds": 780,
-        "depthInches": 3.5
-      },
-      {
-        "elapsedSeconds": 840,
-        "depthInches": 3.5
-      },
-      {
-        "elapsedSeconds": 900,
-        "depthInches": 3.62
-      },
-      {
-        "elapsedSeconds": 960,
-        "depthInches": 3.62
-      },
-      {
-        "elapsedSeconds": 1020,
-        "depthInches": 3.62
-      },
-      {
-        "elapsedSeconds": 1080,
-        "depthInches": 3.62
-      },
-      {
-        "elapsedSeconds": 1140,
-        "depthInches": 3.46
-      },
-      {
-        "elapsedSeconds": 1200,
-        "depthInches": 3.62
-      },
-      {
-        "elapsedSeconds": 1260,
-        "depthInches": 3.7
-      },
-      {
-        "elapsedSeconds": 1380,
-        "depthInches": 4.09
-      },
-      {
-        "elapsedSeconds": 1440,
-        "depthInches": 4.17
-      },
-      {
-        "elapsedSeconds": 1500,
-        "depthInches": 4.45
-      },
-      {
-        "elapsedSeconds": 1560,
-        "depthInches": 4.57
-      },
-      {
-        "elapsedSeconds": 1620,
-        "depthInches": 4.8
-      },
-      {
-        "elapsedSeconds": 1680,
-        "depthInches": 5.04
-      },
-      {
-        "elapsedSeconds": 1739,
-        "depthInches": 5.16
-      },
-      {
-        "elapsedSeconds": 1799,
-        "depthInches": 5.31
-      },
-      {
-        "elapsedSeconds": 1859,
-        "depthInches": 5.63
-      },
-      {
-        "elapsedSeconds": 1919,
-        "depthInches": 5.67
-      },
-      {
-        "elapsedSeconds": 1979,
-        "depthInches": 5.79
-      },
-      {
-        "elapsedSeconds": 2039,
-        "depthInches": 6.18
-      },
-      {
-        "elapsedSeconds": 2099,
-        "depthInches": 6.38
-      },
-      {
-        "elapsedSeconds": 2159,
-        "depthInches": 6.42
-      },
-      {
-        "elapsedSeconds": 2219,
-        "depthInches": 6.73
-      },
-      {
-        "elapsedSeconds": 2279,
-        "depthInches": 7.09
-      },
-      {
-        "elapsedSeconds": 2339,
-        "depthInches": 7.13
-      },
-      {
-        "elapsedSeconds": 2399,
-        "depthInches": 7.28
-      },
-      {
-        "elapsedSeconds": 2459,
-        "depthInches": 7.32
-      },
-      {
-        "elapsedSeconds": 2519,
-        "depthInches": 7.52
-      },
-      {
-        "elapsedSeconds": 2579,
-        "depthInches": 7.56
-      },
-      {
-        "elapsedSeconds": 2639,
-        "depthInches": 7.8
-      },
-      {
-        "elapsedSeconds": 2699,
-        "depthInches": 7.91
-      },
-      {
-        "elapsedSeconds": 2759,
-        "depthInches": 8.23
-      },
-      {
-        "elapsedSeconds": 2819,
-        "depthInches": 8.23
-      },
-      {
-        "elapsedSeconds": 2879,
-        "depthInches": 8.23
-      },
-      {
-        "elapsedSeconds": 2939,
-        "depthInches": 8.58
-      },
-      {
-        "elapsedSeconds": 2999,
-        "depthInches": 8.98
-      },
-      {
-        "elapsedSeconds": 3119,
-        "depthInches": 9.41
-      },
-      {
-        "elapsedSeconds": 3179,
-        "depthInches": 9.45
-      },
-      {
-        "elapsedSeconds": 3239,
-        "depthInches": 9.69
-      },
-      {
-        "elapsedSeconds": 3299,
-        "depthInches": 10.08
-      },
-      {
-        "elapsedSeconds": 3359,
-        "depthInches": 10.08
-      },
-      {
-        "elapsedSeconds": 3419,
-        "depthInches": 10.08
-      },
-      {
-        "elapsedSeconds": 3479,
-        "depthInches": 10.08
-      },
-      {
-        "elapsedSeconds": 3599,
-        "depthInches": 11.26
-      },
-      {
-        "elapsedSeconds": 3659,
-        "depthInches": 11.26
-      },
-      {
-        "elapsedSeconds": 3719,
-        "depthInches": 11.57
-      },
-      {
-        "elapsedSeconds": 3779,
-        "depthInches": 11.57
-      },
-      {
-        "elapsedSeconds": 3839,
-        "depthInches": 11.57
-      },
-      {
-        "elapsedSeconds": 3899,
-        "depthInches": 11.69
-      },
-      {
-        "elapsedSeconds": 3959,
-        "depthInches": 11.57
-      },
-      {
-        "elapsedSeconds": 4019,
-        "depthInches": 11.89
-      },
-      {
-        "elapsedSeconds": 4079,
-        "depthInches": 12.09
-      },
-      {
-        "elapsedSeconds": 4139,
-        "depthInches": 12.09
-      },
-      {
-        "elapsedSeconds": 4199,
-        "depthInches": 12.48
-      },
-      {
-        "elapsedSeconds": 4259,
-        "depthInches": 12.48
-      },
-      {
-        "elapsedSeconds": 4319,
-        "depthInches": 12.48
-      },
-      {
-        "elapsedSeconds": 4379,
-        "depthInches": 12.64
-      },
-      {
-        "elapsedSeconds": 4439,
-        "depthInches": 12.76
-      },
-      {
-        "elapsedSeconds": 4499,
-        "depthInches": 12.95
-      },
-      {
-        "elapsedSeconds": 4559,
-        "depthInches": 13.03
-      },
-      {
-        "elapsedSeconds": 4619,
-        "depthInches": 13.46
-      },
-      {
-        "elapsedSeconds": 4679,
-        "depthInches": 13.46
-      },
-      {
-        "elapsedSeconds": 4739,
-        "depthInches": 13.58
-      },
-      {
-        "elapsedSeconds": 4799,
-        "depthInches": 13.7
-      },
-      {
-        "elapsedSeconds": 4859,
-        "depthInches": 13.86
-      },
-      {
-        "elapsedSeconds": 4919,
-        "depthInches": 14.17
-      },
-      {
-        "elapsedSeconds": 4979,
-        "depthInches": 14.41
-      },
-      {
-        "elapsedSeconds": 5039,
-        "depthInches": 14.45
-      },
-      {
-        "elapsedSeconds": 5099,
-        "depthInches": 14.61
-      },
-      {
-        "elapsedSeconds": 5159,
-        "depthInches": 14.8
-      },
-      {
-        "elapsedSeconds": 5219,
-        "depthInches": 14.8
-      },
-      {
-        "elapsedSeconds": 5279,
-        "depthInches": 14.96
-      },
-      {
-        "elapsedSeconds": 5339,
-        "depthInches": 15.12
-      },
-      {
-        "elapsedSeconds": 5399,
-        "depthInches": 15.28
-      },
-      {
-        "elapsedSeconds": 5459,
-        "depthInches": 15.31
-      },
-      {
-        "elapsedSeconds": 5519,
-        "depthInches": 15.47
-      },
-      {
-        "elapsedSeconds": 5579,
-        "depthInches": 15.55
-      },
-      {
-        "elapsedSeconds": 5639,
-        "depthInches": 15.55
-      },
-      {
-        "elapsedSeconds": 5699,
-        "depthInches": 15.94
-      },
-      {
-        "elapsedSeconds": 5759,
-        "depthInches": 15.98
-      },
-      {
-        "elapsedSeconds": 5879,
-        "depthInches": 15.98
-      },
-      {
-        "elapsedSeconds": 5939,
-        "depthInches": 15.98
-      },
-      {
-        "elapsedSeconds": 5999,
-        "depthInches": 16.69
-      },
-      {
-        "elapsedSeconds": 6059,
-        "depthInches": 16.89
-      },
-      {
-        "elapsedSeconds": 6119,
-        "depthInches": 17.01
-      },
-      {
-        "elapsedSeconds": 6179,
-        "depthInches": 17.01
-      },
-      {
-        "elapsedSeconds": 6239,
-        "depthInches": 17.2
-      },
-      {
-        "elapsedSeconds": 6299,
-        "depthInches": 17.2
-      },
-      {
-        "elapsedSeconds": 6359,
-        "depthInches": 17.2
-      },
-      {
-        "elapsedSeconds": 6419,
-        "depthInches": 17.24
-      },
-      {
-        "elapsedSeconds": 6479,
-        "depthInches": 17.4
-      },
-      {
-        "elapsedSeconds": 6539,
-        "depthInches": 17.48
-      },
-      {
-        "elapsedSeconds": 6599,
-        "depthInches": 17.48
-      },
-      {
-        "elapsedSeconds": 6659,
-        "depthInches": 17.83
-      },
-      {
-        "elapsedSeconds": 6719,
-        "depthInches": 17.95
-      },
-      {
-        "elapsedSeconds": 6779,
-        "depthInches": 18.03
-      },
-      {
-        "elapsedSeconds": 6839,
-        "depthInches": 18.03
-      },
-      {
-        "elapsedSeconds": 6899,
-        "depthInches": 18.35
-      },
-      {
-        "elapsedSeconds": 6959,
-        "depthInches": 18.39
-      },
-      {
-        "elapsedSeconds": 7019,
-        "depthInches": 18.54
-      },
-      {
-        "elapsedSeconds": 7079,
-        "depthInches": 18.78
-      },
-      {
-        "elapsedSeconds": 7139,
-        "depthInches": 18.9
-      },
-      {
-        "elapsedSeconds": 7199,
-        "depthInches": 19.02
-      },
-      {
-        "elapsedSeconds": 7259,
-        "depthInches": 19.09
-      },
-      {
-        "elapsedSeconds": 7319,
-        "depthInches": 19.13
-      },
-      {
-        "elapsedSeconds": 7379,
-        "depthInches": 19.21
-      },
-      {
-        "elapsedSeconds": 7439,
-        "depthInches": 19.21
-      },
-      {
-        "elapsedSeconds": 7499,
-        "depthInches": 19.33
-      },
-      {
-        "elapsedSeconds": 7559,
-        "depthInches": 19.21
-      },
-      {
-        "elapsedSeconds": 7619,
-        "depthInches": 19.29
-      },
-      {
-        "elapsedSeconds": 7679,
-        "depthInches": 19.29
-      },
-      {
-        "elapsedSeconds": 7739,
-        "depthInches": 19.33
-      },
-      {
-        "elapsedSeconds": 7799,
-        "depthInches": 19.37
-      },
-      {
-        "elapsedSeconds": 7859,
-        "depthInches": 19.37
-      },
-      {
-        "elapsedSeconds": 7919,
-        "depthInches": 19.37
-      },
-      {
-        "elapsedSeconds": 7979,
-        "depthInches": 19.57
-      },
-      {
-        "elapsedSeconds": 8039,
-        "depthInches": 19.57
-      },
-      {
-        "elapsedSeconds": 8099,
-        "depthInches": 19.65
-      },
-      {
-        "elapsedSeconds": 8159,
-        "depthInches": 19.72
-      },
-      {
-        "elapsedSeconds": 8219,
-        "depthInches": 19.76
-      },
-      {
-        "elapsedSeconds": 8279,
-        "depthInches": 19.76
-      },
-      {
-        "elapsedSeconds": 8339,
-        "depthInches": 19.8
-      },
-      {
-        "elapsedSeconds": 8399,
-        "depthInches": 19.76
-      },
-      {
-        "elapsedSeconds": 8459,
-        "depthInches": 19.8
-      },
-      {
-        "elapsedSeconds": 8519,
-        "depthInches": 19.8
-      },
-      {
-        "elapsedSeconds": 8579,
-        "depthInches": 19.72
-      },
-      {
-        "elapsedSeconds": 8639,
-        "depthInches": 19.53
-      },
-      {
-        "elapsedSeconds": 8699,
-        "depthInches": 19.45
-      },
-      {
-        "elapsedSeconds": 8759,
-        "depthInches": 19.41
-      },
-      {
-        "elapsedSeconds": 8819,
-        "depthInches": 19.09
-      },
-      {
-        "elapsedSeconds": 8879,
-        "depthInches": 19.09
-      },
-      {
-        "elapsedSeconds": 8999,
-        "depthInches": 19.09
-      },
-      {
-        "elapsedSeconds": 9059,
-        "depthInches": 19.02
-      },
-      {
-        "elapsedSeconds": 9119,
-        "depthInches": 19.06
-      },
-      {
-        "elapsedSeconds": 9179,
-        "depthInches": 19.29
-      },
-      {
-        "elapsedSeconds": 9239,
-        "depthInches": 19.37
-      },
-      {
-        "elapsedSeconds": 9299,
-        "depthInches": 19.45
-      },
-      {
-        "elapsedSeconds": 9359,
-        "depthInches": 19.49
-      },
-      {
-        "elapsedSeconds": 9419,
-        "depthInches": 19.49
-      },
-      {
-        "elapsedSeconds": 9479,
-        "depthInches": 19.49
-      },
-      {
-        "elapsedSeconds": 9539,
-        "depthInches": 19.53
-      },
-      {
-        "elapsedSeconds": 9599,
-        "depthInches": 19.45
-      },
-      {
-        "elapsedSeconds": 9659,
-        "depthInches": 19.45
-      },
-      {
-        "elapsedSeconds": 9719,
-        "depthInches": 19.21
-      },
-      {
-        "elapsedSeconds": 9779,
-        "depthInches": 19.21
-      },
-      {
-        "elapsedSeconds": 9839,
-        "depthInches": 18.94
-      },
-      {
-        "elapsedSeconds": 9899,
-        "depthInches": 18.94
-      },
-      {
-        "elapsedSeconds": 9959,
-        "depthInches": 18.94
-      },
-      {
-        "elapsedSeconds": 10019,
-        "depthInches": 18.94
-      },
-      {
-        "elapsedSeconds": 10079,
-        "depthInches": 18.86
-      },
-      {
-        "elapsedSeconds": 10139,
-        "depthInches": 18.86
-      },
-      {
-        "elapsedSeconds": 10199,
-        "depthInches": 18.82
-      },
-      {
-        "elapsedSeconds": 10259,
-        "depthInches": 18.82
-      },
-      {
-        "elapsedSeconds": 10319,
-        "depthInches": 18.7
-      },
-      {
-        "elapsedSeconds": 10379,
-        "depthInches": 18.7
-      },
-      {
-        "elapsedSeconds": 10439,
-        "depthInches": 18.7
-      },
-      {
-        "elapsedSeconds": 10499,
-        "depthInches": 18.7
-      },
-      {
-        "elapsedSeconds": 10559,
-        "depthInches": 18.62
-      },
-      {
-        "elapsedSeconds": 10619,
-        "depthInches": 18.58
-      },
-      {
-        "elapsedSeconds": 10679,
-        "depthInches": 18.46
-      },
-      {
-        "elapsedSeconds": 10739,
-        "depthInches": 18.11
-      },
-      {
-        "elapsedSeconds": 10799,
-        "depthInches": 18.07
-      },
-      {
-        "elapsedSeconds": 10858,
-        "depthInches": 17.99
-      },
-      {
-        "elapsedSeconds": 10918,
-        "depthInches": 17.95
-      },
-      {
-        "elapsedSeconds": 10978,
-        "depthInches": 17.95
-      },
-      {
-        "elapsedSeconds": 11038,
-        "depthInches": 17.95
-      },
-      {
-        "elapsedSeconds": 11098,
-        "depthInches": 17.48
-      },
-      {
-        "elapsedSeconds": 11158,
-        "depthInches": 17.48
-      },
-      {
-        "elapsedSeconds": 11218,
-        "depthInches": 17.4
-      },
-      {
-        "elapsedSeconds": 11278,
-        "depthInches": 17.36
-      },
-      {
-        "elapsedSeconds": 11338,
-        "depthInches": 17.36
-      },
-      {
-        "elapsedSeconds": 11398,
-        "depthInches": 17.36
-      },
-      {
-        "elapsedSeconds": 11458,
-        "depthInches": 17.32
-      },
-      {
-        "elapsedSeconds": 11518,
-        "depthInches": 17.32
-      },
-      {
-        "elapsedSeconds": 11578,
-        "depthInches": 17.24
-      },
-      {
-        "elapsedSeconds": 11638,
-        "depthInches": 17.09
-      },
-      {
-        "elapsedSeconds": 11698,
-        "depthInches": 17.05
-      },
-      {
-        "elapsedSeconds": 11758,
-        "depthInches": 17.01
-      },
-      {
-        "elapsedSeconds": 11818,
-        "depthInches": 17.01
-      },
-      {
-        "elapsedSeconds": 11878,
-        "depthInches": 17.01
-      },
-      {
-        "elapsedSeconds": 11938,
-        "depthInches": 16.93
-      },
-      {
-        "elapsedSeconds": 11998,
-        "depthInches": 16.93
-      },
-      {
-        "elapsedSeconds": 12058,
-        "depthInches": 16.77
-      },
-      {
-        "elapsedSeconds": 12118,
-        "depthInches": 16.65
-      },
-      {
-        "elapsedSeconds": 12178,
-        "depthInches": 16.61
-      },
-      {
-        "elapsedSeconds": 12238,
-        "depthInches": 16.3
-      },
-      {
-        "elapsedSeconds": 12298,
-        "depthInches": 16.3
-      },
-      {
-        "elapsedSeconds": 12358,
-        "depthInches": 16.18
-      },
-      {
-        "elapsedSeconds": 12418,
-        "depthInches": 16.18
-      },
-      {
-        "elapsedSeconds": 12478,
-        "depthInches": 16.14
-      },
-      {
-        "elapsedSeconds": 12538,
-        "depthInches": 16.1
-      },
-      {
-        "elapsedSeconds": 12598,
-        "depthInches": 15.98
-      },
-      {
-        "elapsedSeconds": 12658,
-        "depthInches": 15.91
-      },
-      {
-        "elapsedSeconds": 12718,
-        "depthInches": 15.59
-      },
-      {
-        "elapsedSeconds": 12778,
-        "depthInches": 15.59
-      },
-      {
-        "elapsedSeconds": 12838,
-        "depthInches": 15.43
-      },
-      {
-        "elapsedSeconds": 12898,
-        "depthInches": 15.08
-      },
-      {
-        "elapsedSeconds": 12958,
-        "depthInches": 15.04
-      },
-      {
-        "elapsedSeconds": 13018,
-        "depthInches": 15.0
-      },
-      {
-        "elapsedSeconds": 13078,
-        "depthInches": 15.0
-      },
-      {
-        "elapsedSeconds": 13138,
-        "depthInches": 14.92
-      },
-      {
-        "elapsedSeconds": 13198,
-        "depthInches": 14.53
-      },
-      {
-        "elapsedSeconds": 13258,
-        "depthInches": 14.49
-      },
-      {
-        "elapsedSeconds": 13318,
-        "depthInches": 14.37
-      },
-      {
-        "elapsedSeconds": 13378,
-        "depthInches": 14.37
-      },
-      {
-        "elapsedSeconds": 13438,
-        "depthInches": 14.21
-      },
-      {
-        "elapsedSeconds": 13498,
-        "depthInches": 14.02
-      },
-      {
-        "elapsedSeconds": 13558,
-        "depthInches": 13.54
-      },
-      {
-        "elapsedSeconds": 13618,
-        "depthInches": 13.5
-      },
-      {
-        "elapsedSeconds": 13678,
-        "depthInches": 13.46
-      },
-      {
-        "elapsedSeconds": 13738,
-        "depthInches": 13.46
-      },
-      {
-        "elapsedSeconds": 13798,
-        "depthInches": 13.07
-      },
-      {
-        "elapsedSeconds": 13858,
-        "depthInches": 12.91
-      },
-      {
-        "elapsedSeconds": 13918,
-        "depthInches": 12.83
-      },
-      {
-        "elapsedSeconds": 13978,
-        "depthInches": 12.83
-      },
-      {
-        "elapsedSeconds": 14038,
-        "depthInches": 12.8
-      },
-      {
-        "elapsedSeconds": 14098,
-        "depthInches": 12.28
-      },
-      {
-        "elapsedSeconds": 14158,
-        "depthInches": 12.2
-      },
-      {
-        "elapsedSeconds": 14218,
-        "depthInches": 11.85
-      },
-      {
-        "elapsedSeconds": 14278,
-        "depthInches": 11.73
-      },
-      {
-        "elapsedSeconds": 14338,
-        "depthInches": 11.54
-      },
-      {
-        "elapsedSeconds": 14398,
-        "depthInches": 11.46
-      },
-      {
-        "elapsedSeconds": 14458,
-        "depthInches": 11.18
-      },
-      {
-        "elapsedSeconds": 14518,
-        "depthInches": 11.18
-      },
-      {
-        "elapsedSeconds": 14578,
-        "depthInches": 11.18
-      },
-      {
-        "elapsedSeconds": 14638,
-        "depthInches": 11.18
-      },
-      {
-        "elapsedSeconds": 14698,
-        "depthInches": 11.1
-      },
-      {
-        "elapsedSeconds": 14758,
-        "depthInches": 10.55
-      },
-      {
-        "elapsedSeconds": 14818,
-        "depthInches": 10.16
-      },
-      {
-        "elapsedSeconds": 14878,
-        "depthInches": 10.0
-      },
-      {
-        "elapsedSeconds": 14938,
-        "depthInches": 10.0
-      },
-      {
-        "elapsedSeconds": 14998,
-        "depthInches": 9.84
-      },
-      {
-        "elapsedSeconds": 15058,
-        "depthInches": 9.84
-      },
-      {
-        "elapsedSeconds": 15118,
-        "depthInches": 9.72
-      },
-      {
-        "elapsedSeconds": 15178,
-        "depthInches": 9.21
-      },
-      {
-        "elapsedSeconds": 15238,
-        "depthInches": 9.13
-      },
-      {
-        "elapsedSeconds": 15298,
-        "depthInches": 9.09
-      },
-      {
-        "elapsedSeconds": 15358,
-        "depthInches": 9.09
-      },
-      {
-        "elapsedSeconds": 15418,
-        "depthInches": 9.06
-      },
-      {
-        "elapsedSeconds": 15478,
-        "depthInches": 8.74
-      },
-      {
-        "elapsedSeconds": 15538,
-        "depthInches": 8.54
-      },
-      {
-        "elapsedSeconds": 15597,
-        "depthInches": 8.27
-      },
-      {
-        "elapsedSeconds": 15657,
-        "depthInches": 7.99
-      },
-      {
-        "elapsedSeconds": 15717,
-        "depthInches": 7.48
-      },
-      {
-        "elapsedSeconds": 15777,
-        "depthInches": 7.17
-      },
-      {
-        "elapsedSeconds": 15837,
-        "depthInches": 7.09
-      },
-      {
-        "elapsedSeconds": 15897,
-        "depthInches": 6.73
-      },
-      {
-        "elapsedSeconds": 15957,
-        "depthInches": 6.57
-      },
-      {
-        "elapsedSeconds": 16017,
-        "depthInches": 6.18
-      },
-      {
-        "elapsedSeconds": 16077,
-        "depthInches": 5.87
-      },
-      {
-        "elapsedSeconds": 16137,
-        "depthInches": 5.67
-      },
-      {
-        "elapsedSeconds": 16197,
-        "depthInches": 5.24
-      },
-      {
-        "elapsedSeconds": 16257,
-        "depthInches": 5.16
-      },
-      {
-        "elapsedSeconds": 16317,
-        "depthInches": 4.88
-      },
-      {
-        "elapsedSeconds": 16377,
-        "depthInches": 4.76
-      },
-      {
-        "elapsedSeconds": 16437,
-        "depthInches": 4.69
-      },
-      {
-        "elapsedSeconds": 16497,
-        "depthInches": 4.41
-      },
-      {
-        "elapsedSeconds": 16557,
-        "depthInches": 4.33
-      },
-      {
-        "elapsedSeconds": 16617,
-        "depthInches": 4.29
-      },
-      {
-        "elapsedSeconds": 16677,
-        "depthInches": 4.06
-      },
-      {
-        "elapsedSeconds": 16737,
-        "depthInches": 3.82
-      },
-      {
-        "elapsedSeconds": 16797,
-        "depthInches": 3.54
-      },
-      {
-        "elapsedSeconds": 16857,
-        "depthInches": 3.5
-      },
-      {
-        "elapsedSeconds": 16917,
-        "depthInches": 3.43
-      },
-      {
-        "elapsedSeconds": 16977,
-        "depthInches": 3.43
-      },
-      {
-        "elapsedSeconds": 17037,
-        "depthInches": 2.8
-      },
-      {
-        "elapsedSeconds": 17097,
-        "depthInches": 2.4
-      },
-      {
-        "elapsedSeconds": 17157,
-        "depthInches": 2.09
-      },
-      {
-        "elapsedSeconds": 17217,
-        "depthInches": 1.93
-      },
-      {
-        "elapsedSeconds": 17277,
-        "depthInches": 1.46
-      },
-      {
-        "elapsedSeconds": 17337,
-        "depthInches": 1.14
-      },
-      {
-        "elapsedSeconds": 17397,
-        "depthInches": 0.75
-      },
-      {
-        "elapsedSeconds": 17457,
-        "depthInches": 0.43
-      },
-      {
-        "elapsedSeconds": 17517,
-        "depthInches": 0.0
+  "defaultEventId": "R1-primary",
+  "events": [
+    {
+      "eventId": "R1-primary",
+      "rank": "R1-primary",
+      "sensorId": "Q-160th-ave-101st-st-2vfj80",
+      "sensorName": "Q - 101st St/160th Ave",
+      "startUtc": "2026-09-26T10:18:58.000Z",
+      "endUtc": "2026-09-26T15:10:55.000Z",
+      "maxDepthIn": 19.8,
+      "durationMin": 291.95,
+      "onsetMin": 138.98,
+      "drainMin": 152.97,
+      "durationAbove4InMin": 255.44,
+      "durationAbove12InMin": 168.43,
+      "durationAbove24InMin": 0,
+      "tidalInfluence": "No",
+      "evidenceLabel": "measured",
+      "profileStatus": "available",
+      "profile": [
+        {
+          "elapsedSeconds": 0,
+          "depthInches": 0.0
+        },
+        {
+          "elapsedSeconds": 60,
+          "depthInches": 0.63
+        },
+        {
+          "elapsedSeconds": 120,
+          "depthInches": 0.67
+        },
+        {
+          "elapsedSeconds": 180,
+          "depthInches": 0.91
+        },
+        {
+          "elapsedSeconds": 240,
+          "depthInches": 1.61
+        },
+        {
+          "elapsedSeconds": 300,
+          "depthInches": 2.01
+        },
+        {
+          "elapsedSeconds": 360,
+          "depthInches": 2.13
+        },
+        {
+          "elapsedSeconds": 420,
+          "depthInches": 2.68
+        },
+        {
+          "elapsedSeconds": 480,
+          "depthInches": 2.8
+        },
+        {
+          "elapsedSeconds": 540,
+          "depthInches": 2.91
+        },
+        {
+          "elapsedSeconds": 600,
+          "depthInches": 3.15
+        },
+        {
+          "elapsedSeconds": 660,
+          "depthInches": 3.39
+        },
+        {
+          "elapsedSeconds": 720,
+          "depthInches": 3.5
+        },
+        {
+          "elapsedSeconds": 780,
+          "depthInches": 3.5
+        },
+        {
+          "elapsedSeconds": 840,
+          "depthInches": 3.5
+        },
+        {
+          "elapsedSeconds": 900,
+          "depthInches": 3.62
+        },
+        {
+          "elapsedSeconds": 960,
+          "depthInches": 3.62
+        },
+        {
+          "elapsedSeconds": 1020,
+          "depthInches": 3.62
+        },
+        {
+          "elapsedSeconds": 1080,
+          "depthInches": 3.62
+        },
+        {
+          "elapsedSeconds": 1140,
+          "depthInches": 3.46
+        },
+        {
+          "elapsedSeconds": 1200,
+          "depthInches": 3.62
+        },
+        {
+          "elapsedSeconds": 1260,
+          "depthInches": 3.7
+        },
+        {
+          "elapsedSeconds": 1380,
+          "depthInches": 4.09
+        },
+        {
+          "elapsedSeconds": 1440,
+          "depthInches": 4.17
+        },
+        {
+          "elapsedSeconds": 1500,
+          "depthInches": 4.45
+        },
+        {
+          "elapsedSeconds": 1560,
+          "depthInches": 4.57
+        },
+        {
+          "elapsedSeconds": 1620,
+          "depthInches": 4.8
+        },
+        {
+          "elapsedSeconds": 1680,
+          "depthInches": 5.04
+        },
+        {
+          "elapsedSeconds": 1739,
+          "depthInches": 5.16
+        },
+        {
+          "elapsedSeconds": 1799,
+          "depthInches": 5.31
+        },
+        {
+          "elapsedSeconds": 1859,
+          "depthInches": 5.63
+        },
+        {
+          "elapsedSeconds": 1919,
+          "depthInches": 5.67
+        },
+        {
+          "elapsedSeconds": 1979,
+          "depthInches": 5.79
+        },
+        {
+          "elapsedSeconds": 2039,
+          "depthInches": 6.18
+        },
+        {
+          "elapsedSeconds": 2099,
+          "depthInches": 6.38
+        },
+        {
+          "elapsedSeconds": 2159,
+          "depthInches": 6.42
+        },
+        {
+          "elapsedSeconds": 2219,
+          "depthInches": 6.73
+        },
+        {
+          "elapsedSeconds": 2279,
+          "depthInches": 7.09
+        },
+        {
+          "elapsedSeconds": 2339,
+          "depthInches": 7.13
+        },
+        {
+          "elapsedSeconds": 2399,
+          "depthInches": 7.28
+        },
+        {
+          "elapsedSeconds": 2459,
+          "depthInches": 7.32
+        },
+        {
+          "elapsedSeconds": 2519,
+          "depthInches": 7.52
+        },
+        {
+          "elapsedSeconds": 2579,
+          "depthInches": 7.56
+        },
+        {
+          "elapsedSeconds": 2639,
+          "depthInches": 7.8
+        },
+        {
+          "elapsedSeconds": 2699,
+          "depthInches": 7.91
+        },
+        {
+          "elapsedSeconds": 2759,
+          "depthInches": 8.23
+        },
+        {
+          "elapsedSeconds": 2819,
+          "depthInches": 8.23
+        },
+        {
+          "elapsedSeconds": 2879,
+          "depthInches": 8.23
+        },
+        {
+          "elapsedSeconds": 2939,
+          "depthInches": 8.58
+        },
+        {
+          "elapsedSeconds": 2999,
+          "depthInches": 8.98
+        },
+        {
+          "elapsedSeconds": 3119,
+          "depthInches": 9.41
+        },
+        {
+          "elapsedSeconds": 3179,
+          "depthInches": 9.45
+        },
+        {
+          "elapsedSeconds": 3239,
+          "depthInches": 9.69
+        },
+        {
+          "elapsedSeconds": 3299,
+          "depthInches": 10.08
+        },
+        {
+          "elapsedSeconds": 3359,
+          "depthInches": 10.08
+        },
+        {
+          "elapsedSeconds": 3419,
+          "depthInches": 10.08
+        },
+        {
+          "elapsedSeconds": 3479,
+          "depthInches": 10.08
+        },
+        {
+          "elapsedSeconds": 3599,
+          "depthInches": 11.26
+        },
+        {
+          "elapsedSeconds": 3659,
+          "depthInches": 11.26
+        },
+        {
+          "elapsedSeconds": 3719,
+          "depthInches": 11.57
+        },
+        {
+          "elapsedSeconds": 3779,
+          "depthInches": 11.57
+        },
+        {
+          "elapsedSeconds": 3839,
+          "depthInches": 11.57
+        },
+        {
+          "elapsedSeconds": 3899,
+          "depthInches": 11.69
+        },
+        {
+          "elapsedSeconds": 3959,
+          "depthInches": 11.57
+        },
+        {
+          "elapsedSeconds": 4019,
+          "depthInches": 11.89
+        },
+        {
+          "elapsedSeconds": 4079,
+          "depthInches": 12.09
+        },
+        {
+          "elapsedSeconds": 4139,
+          "depthInches": 12.09
+        },
+        {
+          "elapsedSeconds": 4199,
+          "depthInches": 12.48
+        },
+        {
+          "elapsedSeconds": 4259,
+          "depthInches": 12.48
+        },
+        {
+          "elapsedSeconds": 4319,
+          "depthInches": 12.48
+        },
+        {
+          "elapsedSeconds": 4379,
+          "depthInches": 12.64
+        },
+        {
+          "elapsedSeconds": 4439,
+          "depthInches": 12.76
+        },
+        {
+          "elapsedSeconds": 4499,
+          "depthInches": 12.95
+        },
+        {
+          "elapsedSeconds": 4559,
+          "depthInches": 13.03
+        },
+        {
+          "elapsedSeconds": 4619,
+          "depthInches": 13.46
+        },
+        {
+          "elapsedSeconds": 4679,
+          "depthInches": 13.46
+        },
+        {
+          "elapsedSeconds": 4739,
+          "depthInches": 13.58
+        },
+        {
+          "elapsedSeconds": 4799,
+          "depthInches": 13.7
+        },
+        {
+          "elapsedSeconds": 4859,
+          "depthInches": 13.86
+        },
+        {
+          "elapsedSeconds": 4919,
+          "depthInches": 14.17
+        },
+        {
+          "elapsedSeconds": 4979,
+          "depthInches": 14.41
+        },
+        {
+          "elapsedSeconds": 5039,
+          "depthInches": 14.45
+        },
+        {
+          "elapsedSeconds": 5099,
+          "depthInches": 14.61
+        },
+        {
+          "elapsedSeconds": 5159,
+          "depthInches": 14.8
+        },
+        {
+          "elapsedSeconds": 5219,
+          "depthInches": 14.8
+        },
+        {
+          "elapsedSeconds": 5279,
+          "depthInches": 14.96
+        },
+        {
+          "elapsedSeconds": 5339,
+          "depthInches": 15.12
+        },
+        {
+          "elapsedSeconds": 5399,
+          "depthInches": 15.28
+        },
+        {
+          "elapsedSeconds": 5459,
+          "depthInches": 15.31
+        },
+        {
+          "elapsedSeconds": 5519,
+          "depthInches": 15.47
+        },
+        {
+          "elapsedSeconds": 5579,
+          "depthInches": 15.55
+        },
+        {
+          "elapsedSeconds": 5639,
+          "depthInches": 15.55
+        },
+        {
+          "elapsedSeconds": 5699,
+          "depthInches": 15.94
+        },
+        {
+          "elapsedSeconds": 5759,
+          "depthInches": 15.98
+        },
+        {
+          "elapsedSeconds": 5879,
+          "depthInches": 15.98
+        },
+        {
+          "elapsedSeconds": 5939,
+          "depthInches": 15.98
+        },
+        {
+          "elapsedSeconds": 5999,
+          "depthInches": 16.69
+        },
+        {
+          "elapsedSeconds": 6059,
+          "depthInches": 16.89
+        },
+        {
+          "elapsedSeconds": 6119,
+          "depthInches": 17.01
+        },
+        {
+          "elapsedSeconds": 6179,
+          "depthInches": 17.01
+        },
+        {
+          "elapsedSeconds": 6239,
+          "depthInches": 17.2
+        },
+        {
+          "elapsedSeconds": 6299,
+          "depthInches": 17.2
+        },
+        {
+          "elapsedSeconds": 6359,
+          "depthInches": 17.2
+        },
+        {
+          "elapsedSeconds": 6419,
+          "depthInches": 17.24
+        },
+        {
+          "elapsedSeconds": 6479,
+          "depthInches": 17.4
+        },
+        {
+          "elapsedSeconds": 6539,
+          "depthInches": 17.48
+        },
+        {
+          "elapsedSeconds": 6599,
+          "depthInches": 17.48
+        },
+        {
+          "elapsedSeconds": 6659,
+          "depthInches": 17.83
+        },
+        {
+          "elapsedSeconds": 6719,
+          "depthInches": 17.95
+        },
+        {
+          "elapsedSeconds": 6779,
+          "depthInches": 18.03
+        },
+        {
+          "elapsedSeconds": 6839,
+          "depthInches": 18.03
+        },
+        {
+          "elapsedSeconds": 6899,
+          "depthInches": 18.35
+        },
+        {
+          "elapsedSeconds": 6959,
+          "depthInches": 18.39
+        },
+        {
+          "elapsedSeconds": 7019,
+          "depthInches": 18.54
+        },
+        {
+          "elapsedSeconds": 7079,
+          "depthInches": 18.78
+        },
+        {
+          "elapsedSeconds": 7139,
+          "depthInches": 18.9
+        },
+        {
+          "elapsedSeconds": 7199,
+          "depthInches": 19.02
+        },
+        {
+          "elapsedSeconds": 7259,
+          "depthInches": 19.09
+        },
+        {
+          "elapsedSeconds": 7319,
+          "depthInches": 19.13
+        },
+        {
+          "elapsedSeconds": 7379,
+          "depthInches": 19.21
+        },
+        {
+          "elapsedSeconds": 7439,
+          "depthInches": 19.21
+        },
+        {
+          "elapsedSeconds": 7499,
+          "depthInches": 19.33
+        },
+        {
+          "elapsedSeconds": 7559,
+          "depthInches": 19.21
+        },
+        {
+          "elapsedSeconds": 7619,
+          "depthInches": 19.29
+        },
+        {
+          "elapsedSeconds": 7679,
+          "depthInches": 19.29
+        },
+        {
+          "elapsedSeconds": 7739,
+          "depthInches": 19.33
+        },
+        {
+          "elapsedSeconds": 7799,
+          "depthInches": 19.37
+        },
+        {
+          "elapsedSeconds": 7859,
+          "depthInches": 19.37
+        },
+        {
+          "elapsedSeconds": 7919,
+          "depthInches": 19.37
+        },
+        {
+          "elapsedSeconds": 7979,
+          "depthInches": 19.57
+        },
+        {
+          "elapsedSeconds": 8039,
+          "depthInches": 19.57
+        },
+        {
+          "elapsedSeconds": 8099,
+          "depthInches": 19.65
+        },
+        {
+          "elapsedSeconds": 8159,
+          "depthInches": 19.72
+        },
+        {
+          "elapsedSeconds": 8219,
+          "depthInches": 19.76
+        },
+        {
+          "elapsedSeconds": 8279,
+          "depthInches": 19.76
+        },
+        {
+          "elapsedSeconds": 8339,
+          "depthInches": 19.8
+        },
+        {
+          "elapsedSeconds": 8399,
+          "depthInches": 19.76
+        },
+        {
+          "elapsedSeconds": 8459,
+          "depthInches": 19.8
+        },
+        {
+          "elapsedSeconds": 8519,
+          "depthInches": 19.8
+        },
+        {
+          "elapsedSeconds": 8579,
+          "depthInches": 19.72
+        },
+        {
+          "elapsedSeconds": 8639,
+          "depthInches": 19.53
+        },
+        {
+          "elapsedSeconds": 8699,
+          "depthInches": 19.45
+        },
+        {
+          "elapsedSeconds": 8759,
+          "depthInches": 19.41
+        },
+        {
+          "elapsedSeconds": 8819,
+          "depthInches": 19.09
+        },
+        {
+          "elapsedSeconds": 8879,
+          "depthInches": 19.09
+        },
+        {
+          "elapsedSeconds": 8999,
+          "depthInches": 19.09
+        },
+        {
+          "elapsedSeconds": 9059,
+          "depthInches": 19.02
+        },
+        {
+          "elapsedSeconds": 9119,
+          "depthInches": 19.06
+        },
+        {
+          "elapsedSeconds": 9179,
+          "depthInches": 19.29
+        },
+        {
+          "elapsedSeconds": 9239,
+          "depthInches": 19.37
+        },
+        {
+          "elapsedSeconds": 9299,
+          "depthInches": 19.45
+        },
+        {
+          "elapsedSeconds": 9359,
+          "depthInches": 19.49
+        },
+        {
+          "elapsedSeconds": 9419,
+          "depthInches": 19.49
+        },
+        {
+          "elapsedSeconds": 9479,
+          "depthInches": 19.49
+        },
+        {
+          "elapsedSeconds": 9539,
+          "depthInches": 19.53
+        },
+        {
+          "elapsedSeconds": 9599,
+          "depthInches": 19.45
+        },
+        {
+          "elapsedSeconds": 9659,
+          "depthInches": 19.45
+        },
+        {
+          "elapsedSeconds": 9719,
+          "depthInches": 19.21
+        },
+        {
+          "elapsedSeconds": 9779,
+          "depthInches": 19.21
+        },
+        {
+          "elapsedSeconds": 9839,
+          "depthInches": 18.94
+        },
+        {
+          "elapsedSeconds": 9899,
+          "depthInches": 18.94
+        },
+        {
+          "elapsedSeconds": 9959,
+          "depthInches": 18.94
+        },
+        {
+          "elapsedSeconds": 10019,
+          "depthInches": 18.94
+        },
+        {
+          "elapsedSeconds": 10079,
+          "depthInches": 18.86
+        },
+        {
+          "elapsedSeconds": 10139,
+          "depthInches": 18.86
+        },
+        {
+          "elapsedSeconds": 10199,
+          "depthInches": 18.82
+        },
+        {
+          "elapsedSeconds": 10259,
+          "depthInches": 18.82
+        },
+        {
+          "elapsedSeconds": 10319,
+          "depthInches": 18.7
+        },
+        {
+          "elapsedSeconds": 10379,
+          "depthInches": 18.7
+        },
+        {
+          "elapsedSeconds": 10439,
+          "depthInches": 18.7
+        },
+        {
+          "elapsedSeconds": 10499,
+          "depthInches": 18.7
+        },
+        {
+          "elapsedSeconds": 10559,
+          "depthInches": 18.62
+        },
+        {
+          "elapsedSeconds": 10619,
+          "depthInches": 18.58
+        },
+        {
+          "elapsedSeconds": 10679,
+          "depthInches": 18.46
+        },
+        {
+          "elapsedSeconds": 10739,
+          "depthInches": 18.11
+        },
+        {
+          "elapsedSeconds": 10799,
+          "depthInches": 18.07
+        },
+        {
+          "elapsedSeconds": 10858,
+          "depthInches": 17.99
+        },
+        {
+          "elapsedSeconds": 10918,
+          "depthInches": 17.95
+        },
+        {
+          "elapsedSeconds": 10978,
+          "depthInches": 17.95
+        },
+        {
+          "elapsedSeconds": 11038,
+          "depthInches": 17.95
+        },
+        {
+          "elapsedSeconds": 11098,
+          "depthInches": 17.48
+        },
+        {
+          "elapsedSeconds": 11158,
+          "depthInches": 17.48
+        },
+        {
+          "elapsedSeconds": 11218,
+          "depthInches": 17.4
+        },
+        {
+          "elapsedSeconds": 11278,
+          "depthInches": 17.36
+        },
+        {
+          "elapsedSeconds": 11338,
+          "depthInches": 17.36
+        },
+        {
+          "elapsedSeconds": 11398,
+          "depthInches": 17.36
+        },
+        {
+          "elapsedSeconds": 11458,
+          "depthInches": 17.32
+        },
+        {
+          "elapsedSeconds": 11518,
+          "depthInches": 17.32
+        },
+        {
+          "elapsedSeconds": 11578,
+          "depthInches": 17.24
+        },
+        {
+          "elapsedSeconds": 11638,
+          "depthInches": 17.09
+        },
+        {
+          "elapsedSeconds": 11698,
+          "depthInches": 17.05
+        },
+        {
+          "elapsedSeconds": 11758,
+          "depthInches": 17.01
+        },
+        {
+          "elapsedSeconds": 11818,
+          "depthInches": 17.01
+        },
+        {
+          "elapsedSeconds": 11878,
+          "depthInches": 17.01
+        },
+        {
+          "elapsedSeconds": 11938,
+          "depthInches": 16.93
+        },
+        {
+          "elapsedSeconds": 11998,
+          "depthInches": 16.93
+        },
+        {
+          "elapsedSeconds": 12058,
+          "depthInches": 16.77
+        },
+        {
+          "elapsedSeconds": 12118,
+          "depthInches": 16.65
+        },
+        {
+          "elapsedSeconds": 12178,
+          "depthInches": 16.61
+        },
+        {
+          "elapsedSeconds": 12238,
+          "depthInches": 16.3
+        },
+        {
+          "elapsedSeconds": 12298,
+          "depthInches": 16.3
+        },
+        {
+          "elapsedSeconds": 12358,
+          "depthInches": 16.18
+        },
+        {
+          "elapsedSeconds": 12418,
+          "depthInches": 16.18
+        },
+        {
+          "elapsedSeconds": 12478,
+          "depthInches": 16.14
+        },
+        {
+          "elapsedSeconds": 12538,
+          "depthInches": 16.1
+        },
+        {
+          "elapsedSeconds": 12598,
+          "depthInches": 15.98
+        },
+        {
+          "elapsedSeconds": 12658,
+          "depthInches": 15.91
+        },
+        {
+          "elapsedSeconds": 12718,
+          "depthInches": 15.59
+        },
+        {
+          "elapsedSeconds": 12778,
+          "depthInches": 15.59
+        },
+        {
+          "elapsedSeconds": 12838,
+          "depthInches": 15.43
+        },
+        {
+          "elapsedSeconds": 12898,
+          "depthInches": 15.08
+        },
+        {
+          "elapsedSeconds": 12958,
+          "depthInches": 15.04
+        },
+        {
+          "elapsedSeconds": 13018,
+          "depthInches": 15.0
+        },
+        {
+          "elapsedSeconds": 13078,
+          "depthInches": 15.0
+        },
+        {
+          "elapsedSeconds": 13138,
+          "depthInches": 14.92
+        },
+        {
+          "elapsedSeconds": 13198,
+          "depthInches": 14.53
+        },
+        {
+          "elapsedSeconds": 13258,
+          "depthInches": 14.49
+        },
+        {
+          "elapsedSeconds": 13318,
+          "depthInches": 14.37
+        },
+        {
+          "elapsedSeconds": 13378,
+          "depthInches": 14.37
+        },
+        {
+          "elapsedSeconds": 13438,
+          "depthInches": 14.21
+        },
+        {
+          "elapsedSeconds": 13498,
+          "depthInches": 14.02
+        },
+        {
+          "elapsedSeconds": 13558,
+          "depthInches": 13.54
+        },
+        {
+          "elapsedSeconds": 13618,
+          "depthInches": 13.5
+        },
+        {
+          "elapsedSeconds": 13678,
+          "depthInches": 13.46
+        },
+        {
+          "elapsedSeconds": 13738,
+          "depthInches": 13.46
+        },
+        {
+          "elapsedSeconds": 13798,
+          "depthInches": 13.07
+        },
+        {
+          "elapsedSeconds": 13858,
+          "depthInches": 12.91
+        },
+        {
+          "elapsedSeconds": 13918,
+          "depthInches": 12.83
+        },
+        {
+          "elapsedSeconds": 13978,
+          "depthInches": 12.83
+        },
+        {
+          "elapsedSeconds": 14038,
+          "depthInches": 12.8
+        },
+        {
+          "elapsedSeconds": 14098,
+          "depthInches": 12.28
+        },
+        {
+          "elapsedSeconds": 14158,
+          "depthInches": 12.2
+        },
+        {
+          "elapsedSeconds": 14218,
+          "depthInches": 11.85
+        },
+        {
+          "elapsedSeconds": 14278,
+          "depthInches": 11.73
+        },
+        {
+          "elapsedSeconds": 14338,
+          "depthInches": 11.54
+        },
+        {
+          "elapsedSeconds": 14398,
+          "depthInches": 11.46
+        },
+        {
+          "elapsedSeconds": 14458,
+          "depthInches": 11.18
+        },
+        {
+          "elapsedSeconds": 14518,
+          "depthInches": 11.18
+        },
+        {
+          "elapsedSeconds": 14578,
+          "depthInches": 11.18
+        },
+        {
+          "elapsedSeconds": 14638,
+          "depthInches": 11.18
+        },
+        {
+          "elapsedSeconds": 14698,
+          "depthInches": 11.1
+        },
+        {
+          "elapsedSeconds": 14758,
+          "depthInches": 10.55
+        },
+        {
+          "elapsedSeconds": 14818,
+          "depthInches": 10.16
+        },
+        {
+          "elapsedSeconds": 14878,
+          "depthInches": 10.0
+        },
+        {
+          "elapsedSeconds": 14938,
+          "depthInches": 10.0
+        },
+        {
+          "elapsedSeconds": 14998,
+          "depthInches": 9.84
+        },
+        {
+          "elapsedSeconds": 15058,
+          "depthInches": 9.84
+        },
+        {
+          "elapsedSeconds": 15118,
+          "depthInches": 9.72
+        },
+        {
+          "elapsedSeconds": 15178,
+          "depthInches": 9.21
+        },
+        {
+          "elapsedSeconds": 15238,
+          "depthInches": 9.13
+        },
+        {
+          "elapsedSeconds": 15298,
+          "depthInches": 9.09
+        },
+        {
+          "elapsedSeconds": 15358,
+          "depthInches": 9.09
+        },
+        {
+          "elapsedSeconds": 15418,
+          "depthInches": 9.06
+        },
+        {
+          "elapsedSeconds": 15478,
+          "depthInches": 8.74
+        },
+        {
+          "elapsedSeconds": 15538,
+          "depthInches": 8.54
+        },
+        {
+          "elapsedSeconds": 15597,
+          "depthInches": 8.27
+        },
+        {
+          "elapsedSeconds": 15657,
+          "depthInches": 7.99
+        },
+        {
+          "elapsedSeconds": 15717,
+          "depthInches": 7.48
+        },
+        {
+          "elapsedSeconds": 15777,
+          "depthInches": 7.17
+        },
+        {
+          "elapsedSeconds": 15837,
+          "depthInches": 7.09
+        },
+        {
+          "elapsedSeconds": 15897,
+          "depthInches": 6.73
+        },
+        {
+          "elapsedSeconds": 15957,
+          "depthInches": 6.57
+        },
+        {
+          "elapsedSeconds": 16017,
+          "depthInches": 6.18
+        },
+        {
+          "elapsedSeconds": 16077,
+          "depthInches": 5.87
+        },
+        {
+          "elapsedSeconds": 16137,
+          "depthInches": 5.67
+        },
+        {
+          "elapsedSeconds": 16197,
+          "depthInches": 5.24
+        },
+        {
+          "elapsedSeconds": 16257,
+          "depthInches": 5.16
+        },
+        {
+          "elapsedSeconds": 16317,
+          "depthInches": 4.88
+        },
+        {
+          "elapsedSeconds": 16377,
+          "depthInches": 4.76
+        },
+        {
+          "elapsedSeconds": 16437,
+          "depthInches": 4.69
+        },
+        {
+          "elapsedSeconds": 16497,
+          "depthInches": 4.41
+        },
+        {
+          "elapsedSeconds": 16557,
+          "depthInches": 4.33
+        },
+        {
+          "elapsedSeconds": 16617,
+          "depthInches": 4.29
+        },
+        {
+          "elapsedSeconds": 16677,
+          "depthInches": 4.06
+        },
+        {
+          "elapsedSeconds": 16737,
+          "depthInches": 3.82
+        },
+        {
+          "elapsedSeconds": 16797,
+          "depthInches": 3.54
+        },
+        {
+          "elapsedSeconds": 16857,
+          "depthInches": 3.5
+        },
+        {
+          "elapsedSeconds": 16917,
+          "depthInches": 3.43
+        },
+        {
+          "elapsedSeconds": 16977,
+          "depthInches": 3.43
+        },
+        {
+          "elapsedSeconds": 17037,
+          "depthInches": 2.8
+        },
+        {
+          "elapsedSeconds": 17097,
+          "depthInches": 2.4
+        },
+        {
+          "elapsedSeconds": 17157,
+          "depthInches": 2.09
+        },
+        {
+          "elapsedSeconds": 17217,
+          "depthInches": 1.93
+        },
+        {
+          "elapsedSeconds": 17277,
+          "depthInches": 1.46
+        },
+        {
+          "elapsedSeconds": 17337,
+          "depthInches": 1.14
+        },
+        {
+          "elapsedSeconds": 17397,
+          "depthInches": 0.75
+        },
+        {
+          "elapsedSeconds": 17457,
+          "depthInches": 0.43
+        },
+        {
+          "elapsedSeconds": 17517,
+          "depthInches": 0.0
+        }
+      ],
+      "historyNote": "Sensor record starts 2026-04-03; absence before that is 'unavailable', not 'never floods'.",
+      "location": {
+        "latitude": 40.65829,
+        "longitude": -73.831946,
+        "borough": "Queens",
+        "communityBoard": "410",
+        "zipcode": "11414"
       }
-    ]
-  },
+    },
+    {
+      "eventId": "R2",
+      "rank": "R2",
+      "sensorId": "BK-w-st-kent-st-31i7yc",
+      "sensorName": "BK - Kent St/West St",
+      "startUtc": "2026-09-26T12:13:32.000Z",
+      "endUtc": "2026-09-26T15:19:32.000Z",
+      "maxDepthIn": 11.26,
+      "durationMin": 186,
+      "onsetMin": 96,
+      "drainMin": 90.01,
+      "durationAbove4InMin": 139.1,
+      "durationAbove12InMin": 0,
+      "durationAbove24InMin": 0,
+      "tidalInfluence": "No",
+      "evidenceLabel": "measured",
+      "profileStatus": "available",
+      "profile": [
+        {
+          "elapsedSeconds": 0,
+          "depthInches": 0.0
+        },
+        {
+          "elapsedSeconds": 60,
+          "depthInches": 0.43
+        },
+        {
+          "elapsedSeconds": 120,
+          "depthInches": 0.47
+        },
+        {
+          "elapsedSeconds": 180,
+          "depthInches": 0.51
+        },
+        {
+          "elapsedSeconds": 240,
+          "depthInches": 0.51
+        },
+        {
+          "elapsedSeconds": 300,
+          "depthInches": 0.51
+        },
+        {
+          "elapsedSeconds": 360,
+          "depthInches": 0.51
+        },
+        {
+          "elapsedSeconds": 420,
+          "depthInches": 0.51
+        },
+        {
+          "elapsedSeconds": 480,
+          "depthInches": 0.51
+        },
+        {
+          "elapsedSeconds": 540,
+          "depthInches": 0.51
+        },
+        {
+          "elapsedSeconds": 600,
+          "depthInches": 0.55
+        },
+        {
+          "elapsedSeconds": 720,
+          "depthInches": 1.06
+        },
+        {
+          "elapsedSeconds": 780,
+          "depthInches": 1.06
+        },
+        {
+          "elapsedSeconds": 840,
+          "depthInches": 1.5
+        },
+        {
+          "elapsedSeconds": 900,
+          "depthInches": 1.73
+        },
+        {
+          "elapsedSeconds": 960,
+          "depthInches": 1.77
+        },
+        {
+          "elapsedSeconds": 1020,
+          "depthInches": 2.05
+        },
+        {
+          "elapsedSeconds": 1080,
+          "depthInches": 2.24
+        },
+        {
+          "elapsedSeconds": 1140,
+          "depthInches": 2.24
+        },
+        {
+          "elapsedSeconds": 1200,
+          "depthInches": 2.24
+        },
+        {
+          "elapsedSeconds": 1260,
+          "depthInches": 2.48
+        },
+        {
+          "elapsedSeconds": 1320,
+          "depthInches": 2.72
+        },
+        {
+          "elapsedSeconds": 1380,
+          "depthInches": 2.99
+        },
+        {
+          "elapsedSeconds": 1440,
+          "depthInches": 3.03
+        },
+        {
+          "elapsedSeconds": 1500,
+          "depthInches": 3.58
+        },
+        {
+          "elapsedSeconds": 1560,
+          "depthInches": 3.82
+        },
+        {
+          "elapsedSeconds": 1620,
+          "depthInches": 3.86
+        },
+        {
+          "elapsedSeconds": 1680,
+          "depthInches": 4.02
+        },
+        {
+          "elapsedSeconds": 1740,
+          "depthInches": 4.17
+        },
+        {
+          "elapsedSeconds": 1800,
+          "depthInches": 4.25
+        },
+        {
+          "elapsedSeconds": 1860,
+          "depthInches": 4.49
+        },
+        {
+          "elapsedSeconds": 1920,
+          "depthInches": 4.57
+        },
+        {
+          "elapsedSeconds": 1980,
+          "depthInches": 4.88
+        },
+        {
+          "elapsedSeconds": 2040,
+          "depthInches": 4.92
+        },
+        {
+          "elapsedSeconds": 2100,
+          "depthInches": 4.92
+        },
+        {
+          "elapsedSeconds": 2160,
+          "depthInches": 5.16
+        },
+        {
+          "elapsedSeconds": 2220,
+          "depthInches": 5.16
+        },
+        {
+          "elapsedSeconds": 2280,
+          "depthInches": 5.28
+        },
+        {
+          "elapsedSeconds": 2340,
+          "depthInches": 5.75
+        },
+        {
+          "elapsedSeconds": 2460,
+          "depthInches": 6.06
+        },
+        {
+          "elapsedSeconds": 2520,
+          "depthInches": 6.14
+        },
+        {
+          "elapsedSeconds": 2580,
+          "depthInches": 6.46
+        },
+        {
+          "elapsedSeconds": 2640,
+          "depthInches": 6.65
+        },
+        {
+          "elapsedSeconds": 2700,
+          "depthInches": 6.85
+        },
+        {
+          "elapsedSeconds": 2760,
+          "depthInches": 6.85
+        },
+        {
+          "elapsedSeconds": 2820,
+          "depthInches": 7.28
+        },
+        {
+          "elapsedSeconds": 2880,
+          "depthInches": 7.4
+        },
+        {
+          "elapsedSeconds": 2940,
+          "depthInches": 7.6
+        },
+        {
+          "elapsedSeconds": 3000,
+          "depthInches": 7.64
+        },
+        {
+          "elapsedSeconds": 3060,
+          "depthInches": 7.91
+        },
+        {
+          "elapsedSeconds": 3120,
+          "depthInches": 7.99
+        },
+        {
+          "elapsedSeconds": 3180,
+          "depthInches": 8.23
+        },
+        {
+          "elapsedSeconds": 3240,
+          "depthInches": 8.35
+        },
+        {
+          "elapsedSeconds": 3300,
+          "depthInches": 8.35
+        },
+        {
+          "elapsedSeconds": 3360,
+          "depthInches": 8.35
+        },
+        {
+          "elapsedSeconds": 3420,
+          "depthInches": 8.7
+        },
+        {
+          "elapsedSeconds": 3480,
+          "depthInches": 8.82
+        },
+        {
+          "elapsedSeconds": 3600,
+          "depthInches": 8.94
+        },
+        {
+          "elapsedSeconds": 3660,
+          "depthInches": 8.98
+        },
+        {
+          "elapsedSeconds": 3720,
+          "depthInches": 8.94
+        },
+        {
+          "elapsedSeconds": 3780,
+          "depthInches": 8.94
+        },
+        {
+          "elapsedSeconds": 3840,
+          "depthInches": 8.98
+        },
+        {
+          "elapsedSeconds": 3900,
+          "depthInches": 9.02
+        },
+        {
+          "elapsedSeconds": 3960,
+          "depthInches": 9.06
+        },
+        {
+          "elapsedSeconds": 4020,
+          "depthInches": 9.09
+        },
+        {
+          "elapsedSeconds": 4080,
+          "depthInches": 9.09
+        },
+        {
+          "elapsedSeconds": 4140,
+          "depthInches": 9.72
+        },
+        {
+          "elapsedSeconds": 4200,
+          "depthInches": 9.8
+        },
+        {
+          "elapsedSeconds": 4260,
+          "depthInches": 9.8
+        },
+        {
+          "elapsedSeconds": 4320,
+          "depthInches": 9.8
+        },
+        {
+          "elapsedSeconds": 4380,
+          "depthInches": 9.8
+        },
+        {
+          "elapsedSeconds": 4440,
+          "depthInches": 9.8
+        },
+        {
+          "elapsedSeconds": 4500,
+          "depthInches": 9.92
+        },
+        {
+          "elapsedSeconds": 4560,
+          "depthInches": 9.8
+        },
+        {
+          "elapsedSeconds": 4620,
+          "depthInches": 9.92
+        },
+        {
+          "elapsedSeconds": 4680,
+          "depthInches": 10.16
+        },
+        {
+          "elapsedSeconds": 4740,
+          "depthInches": 10.24
+        },
+        {
+          "elapsedSeconds": 4800,
+          "depthInches": 10.43
+        },
+        {
+          "elapsedSeconds": 4860,
+          "depthInches": 10.51
+        },
+        {
+          "elapsedSeconds": 4920,
+          "depthInches": 10.59
+        },
+        {
+          "elapsedSeconds": 4980,
+          "depthInches": 10.94
+        },
+        {
+          "elapsedSeconds": 5040,
+          "depthInches": 11.02
+        },
+        {
+          "elapsedSeconds": 5100,
+          "depthInches": 11.02
+        },
+        {
+          "elapsedSeconds": 5160,
+          "depthInches": 11.02
+        },
+        {
+          "elapsedSeconds": 5220,
+          "depthInches": 11.06
+        },
+        {
+          "elapsedSeconds": 5280,
+          "depthInches": 11.14
+        },
+        {
+          "elapsedSeconds": 5340,
+          "depthInches": 11.06
+        },
+        {
+          "elapsedSeconds": 5400,
+          "depthInches": 11.14
+        },
+        {
+          "elapsedSeconds": 5460,
+          "depthInches": 11.06
+        },
+        {
+          "elapsedSeconds": 5520,
+          "depthInches": 11.02
+        },
+        {
+          "elapsedSeconds": 5580,
+          "depthInches": 11.02
+        },
+        {
+          "elapsedSeconds": 5640,
+          "depthInches": 10.94
+        },
+        {
+          "elapsedSeconds": 5700,
+          "depthInches": 11.02
+        },
+        {
+          "elapsedSeconds": 5760,
+          "depthInches": 11.26
+        },
+        {
+          "elapsedSeconds": 5820,
+          "depthInches": 11.26
+        },
+        {
+          "elapsedSeconds": 5880,
+          "depthInches": 11.26
+        },
+        {
+          "elapsedSeconds": 5940,
+          "depthInches": 11.26
+        },
+        {
+          "elapsedSeconds": 6000,
+          "depthInches": 10.94
+        },
+        {
+          "elapsedSeconds": 6060,
+          "depthInches": 10.94
+        },
+        {
+          "elapsedSeconds": 6120,
+          "depthInches": 10.75
+        },
+        {
+          "elapsedSeconds": 6180,
+          "depthInches": 10.75
+        },
+        {
+          "elapsedSeconds": 6240,
+          "depthInches": 10.59
+        },
+        {
+          "elapsedSeconds": 6300,
+          "depthInches": 10.43
+        },
+        {
+          "elapsedSeconds": 6360,
+          "depthInches": 10.35
+        },
+        {
+          "elapsedSeconds": 6420,
+          "depthInches": 10.35
+        },
+        {
+          "elapsedSeconds": 6480,
+          "depthInches": 10.28
+        },
+        {
+          "elapsedSeconds": 6540,
+          "depthInches": 10.28
+        },
+        {
+          "elapsedSeconds": 6600,
+          "depthInches": 10.43
+        },
+        {
+          "elapsedSeconds": 6660,
+          "depthInches": 10.28
+        },
+        {
+          "elapsedSeconds": 6720,
+          "depthInches": 10.12
+        },
+        {
+          "elapsedSeconds": 6780,
+          "depthInches": 10.12
+        },
+        {
+          "elapsedSeconds": 6840,
+          "depthInches": 10.08
+        },
+        {
+          "elapsedSeconds": 6900,
+          "depthInches": 10.0
+        },
+        {
+          "elapsedSeconds": 6960,
+          "depthInches": 9.65
+        },
+        {
+          "elapsedSeconds": 7020,
+          "depthInches": 9.57
+        },
+        {
+          "elapsedSeconds": 7080,
+          "depthInches": 9.53
+        },
+        {
+          "elapsedSeconds": 7140,
+          "depthInches": 9.25
+        },
+        {
+          "elapsedSeconds": 7200,
+          "depthInches": 9.21
+        },
+        {
+          "elapsedSeconds": 7260,
+          "depthInches": 9.09
+        },
+        {
+          "elapsedSeconds": 7320,
+          "depthInches": 8.98
+        },
+        {
+          "elapsedSeconds": 7380,
+          "depthInches": 8.66
+        },
+        {
+          "elapsedSeconds": 7440,
+          "depthInches": 8.58
+        },
+        {
+          "elapsedSeconds": 7500,
+          "depthInches": 8.58
+        },
+        {
+          "elapsedSeconds": 7560,
+          "depthInches": 8.58
+        },
+        {
+          "elapsedSeconds": 7620,
+          "depthInches": 8.19
+        },
+        {
+          "elapsedSeconds": 7680,
+          "depthInches": 8.07
+        },
+        {
+          "elapsedSeconds": 7740,
+          "depthInches": 8.03
+        },
+        {
+          "elapsedSeconds": 7800,
+          "depthInches": 8.03
+        },
+        {
+          "elapsedSeconds": 7860,
+          "depthInches": 7.95
+        },
+        {
+          "elapsedSeconds": 7920,
+          "depthInches": 7.95
+        },
+        {
+          "elapsedSeconds": 7980,
+          "depthInches": 7.95
+        },
+        {
+          "elapsedSeconds": 8040,
+          "depthInches": 7.95
+        },
+        {
+          "elapsedSeconds": 8100,
+          "depthInches": 7.83
+        },
+        {
+          "elapsedSeconds": 8160,
+          "depthInches": 7.72
+        },
+        {
+          "elapsedSeconds": 8220,
+          "depthInches": 7.72
+        },
+        {
+          "elapsedSeconds": 8280,
+          "depthInches": 7.56
+        },
+        {
+          "elapsedSeconds": 8340,
+          "depthInches": 7.56
+        },
+        {
+          "elapsedSeconds": 8400,
+          "depthInches": 7.48
+        },
+        {
+          "elapsedSeconds": 8460,
+          "depthInches": 7.36
+        },
+        {
+          "elapsedSeconds": 8520,
+          "depthInches": 7.36
+        },
+        {
+          "elapsedSeconds": 8580,
+          "depthInches": 7.32
+        },
+        {
+          "elapsedSeconds": 8640,
+          "depthInches": 7.36
+        },
+        {
+          "elapsedSeconds": 8700,
+          "depthInches": 7.05
+        },
+        {
+          "elapsedSeconds": 8760,
+          "depthInches": 7.13
+        },
+        {
+          "elapsedSeconds": 8820,
+          "depthInches": 7.4
+        },
+        {
+          "elapsedSeconds": 8880,
+          "depthInches": 7.4
+        },
+        {
+          "elapsedSeconds": 8940,
+          "depthInches": 7.4
+        },
+        {
+          "elapsedSeconds": 9000,
+          "depthInches": 7.13
+        },
+        {
+          "elapsedSeconds": 9060,
+          "depthInches": 6.57
+        },
+        {
+          "elapsedSeconds": 9120,
+          "depthInches": 6.34
+        },
+        {
+          "elapsedSeconds": 9180,
+          "depthInches": 6.22
+        },
+        {
+          "elapsedSeconds": 9240,
+          "depthInches": 6.1
+        },
+        {
+          "elapsedSeconds": 9300,
+          "depthInches": 5.83
+        },
+        {
+          "elapsedSeconds": 9420,
+          "depthInches": 5.24
+        },
+        {
+          "elapsedSeconds": 9480,
+          "depthInches": 5.2
+        },
+        {
+          "elapsedSeconds": 9539,
+          "depthInches": 5.2
+        },
+        {
+          "elapsedSeconds": 9599,
+          "depthInches": 5.2
+        },
+        {
+          "elapsedSeconds": 9659,
+          "depthInches": 5.16
+        },
+        {
+          "elapsedSeconds": 9719,
+          "depthInches": 5.12
+        },
+        {
+          "elapsedSeconds": 9779,
+          "depthInches": 4.92
+        },
+        {
+          "elapsedSeconds": 9839,
+          "depthInches": 4.8
+        },
+        {
+          "elapsedSeconds": 9900,
+          "depthInches": 4.49
+        },
+        {
+          "elapsedSeconds": 9960,
+          "depthInches": 4.29
+        },
+        {
+          "elapsedSeconds": 10020,
+          "depthInches": 4.13
+        },
+        {
+          "elapsedSeconds": 10080,
+          "depthInches": 3.7
+        },
+        {
+          "elapsedSeconds": 10140,
+          "depthInches": 3.54
+        },
+        {
+          "elapsedSeconds": 10200,
+          "depthInches": 3.54
+        },
+        {
+          "elapsedSeconds": 10260,
+          "depthInches": 3.54
+        },
+        {
+          "elapsedSeconds": 10320,
+          "depthInches": 3.39
+        },
+        {
+          "elapsedSeconds": 10380,
+          "depthInches": 3.27
+        },
+        {
+          "elapsedSeconds": 10440,
+          "depthInches": 2.83
+        },
+        {
+          "elapsedSeconds": 10500,
+          "depthInches": 2.8
+        },
+        {
+          "elapsedSeconds": 10560,
+          "depthInches": 2.52
+        },
+        {
+          "elapsedSeconds": 10620,
+          "depthInches": 2.36
+        },
+        {
+          "elapsedSeconds": 10680,
+          "depthInches": 2.17
+        },
+        {
+          "elapsedSeconds": 10740,
+          "depthInches": 2.17
+        },
+        {
+          "elapsedSeconds": 10800,
+          "depthInches": 1.97
+        },
+        {
+          "elapsedSeconds": 10860,
+          "depthInches": 1.85
+        },
+        {
+          "elapsedSeconds": 10920,
+          "depthInches": 1.73
+        },
+        {
+          "elapsedSeconds": 10980,
+          "depthInches": 1.26
+        },
+        {
+          "elapsedSeconds": 11040,
+          "depthInches": 1.06
+        },
+        {
+          "elapsedSeconds": 11160,
+          "depthInches": 0.0
+        }
+      ],
+      "historyNote": "CAUTION: installed 2026-07-30, so ~2 months of record at snapshot time. Demo must not describe this location as 'rarely floods'.",
+      "location": {
+        "latitude": 40.730248,
+        "longitude": -73.961232,
+        "borough": "Brooklyn",
+        "communityBoard": "301",
+        "zipcode": "11222"
+      }
+    },
+    {
+      "eventId": "R3",
+      "rank": "R3",
+      "sensorId": "Q-norton-ave-beach-45th-st-2vfj80",
+      "sensorName": "Q - Norton Ave/Beach 45th St",
+      "startUtc": "2026-09-26T11:55:03.000Z",
+      "endUtc": "2026-09-26T14:16:04.000Z",
+      "maxDepthIn": 6.81,
+      "durationMin": 141.01,
+      "onsetMin": 61,
+      "drainMin": 80,
+      "durationAbove4InMin": 91.7,
+      "durationAbove12InMin": 0,
+      "durationAbove24InMin": 0,
+      "tidalInfluence": "No",
+      "evidenceLabel": "measured",
+      "profileStatus": "available",
+      "profile": [
+        {
+          "elapsedSeconds": 0,
+          "depthInches": 0.0
+        },
+        {
+          "elapsedSeconds": 60,
+          "depthInches": 0.87
+        },
+        {
+          "elapsedSeconds": 120,
+          "depthInches": 1.61
+        },
+        {
+          "elapsedSeconds": 180,
+          "depthInches": 2.2
+        },
+        {
+          "elapsedSeconds": 240,
+          "depthInches": 2.36
+        },
+        {
+          "elapsedSeconds": 300,
+          "depthInches": 2.6
+        },
+        {
+          "elapsedSeconds": 360,
+          "depthInches": 2.87
+        },
+        {
+          "elapsedSeconds": 420,
+          "depthInches": 2.91
+        },
+        {
+          "elapsedSeconds": 480,
+          "depthInches": 3.46
+        },
+        {
+          "elapsedSeconds": 540,
+          "depthInches": 3.46
+        },
+        {
+          "elapsedSeconds": 601,
+          "depthInches": 3.86
+        },
+        {
+          "elapsedSeconds": 661,
+          "depthInches": 3.9
+        },
+        {
+          "elapsedSeconds": 781,
+          "depthInches": 4.61
+        },
+        {
+          "elapsedSeconds": 841,
+          "depthInches": 4.96
+        },
+        {
+          "elapsedSeconds": 901,
+          "depthInches": 5.12
+        },
+        {
+          "elapsedSeconds": 961,
+          "depthInches": 5.24
+        },
+        {
+          "elapsedSeconds": 1021,
+          "depthInches": 5.35
+        },
+        {
+          "elapsedSeconds": 1081,
+          "depthInches": 5.39
+        },
+        {
+          "elapsedSeconds": 1141,
+          "depthInches": 5.39
+        },
+        {
+          "elapsedSeconds": 1201,
+          "depthInches": 5.43
+        },
+        {
+          "elapsedSeconds": 1261,
+          "depthInches": 5.43
+        },
+        {
+          "elapsedSeconds": 1321,
+          "depthInches": 5.51
+        },
+        {
+          "elapsedSeconds": 1381,
+          "depthInches": 5.51
+        },
+        {
+          "elapsedSeconds": 1441,
+          "depthInches": 5.55
+        },
+        {
+          "elapsedSeconds": 1501,
+          "depthInches": 5.55
+        },
+        {
+          "elapsedSeconds": 1561,
+          "depthInches": 5.51
+        },
+        {
+          "elapsedSeconds": 1621,
+          "depthInches": 5.67
+        },
+        {
+          "elapsedSeconds": 1681,
+          "depthInches": 5.67
+        },
+        {
+          "elapsedSeconds": 1741,
+          "depthInches": 5.67
+        },
+        {
+          "elapsedSeconds": 1801,
+          "depthInches": 5.71
+        },
+        {
+          "elapsedSeconds": 1860,
+          "depthInches": 5.83
+        },
+        {
+          "elapsedSeconds": 1920,
+          "depthInches": 5.94
+        },
+        {
+          "elapsedSeconds": 1980,
+          "depthInches": 5.94
+        },
+        {
+          "elapsedSeconds": 2040,
+          "depthInches": 6.18
+        },
+        {
+          "elapsedSeconds": 2100,
+          "depthInches": 6.26
+        },
+        {
+          "elapsedSeconds": 2160,
+          "depthInches": 6.38
+        },
+        {
+          "elapsedSeconds": 2220,
+          "depthInches": 6.38
+        },
+        {
+          "elapsedSeconds": 2280,
+          "depthInches": 6.42
+        },
+        {
+          "elapsedSeconds": 2340,
+          "depthInches": 6.42
+        },
+        {
+          "elapsedSeconds": 2400,
+          "depthInches": 6.54
+        },
+        {
+          "elapsedSeconds": 2460,
+          "depthInches": 6.54
+        },
+        {
+          "elapsedSeconds": 2520,
+          "depthInches": 6.54
+        },
+        {
+          "elapsedSeconds": 2580,
+          "depthInches": 6.5
+        },
+        {
+          "elapsedSeconds": 2640,
+          "depthInches": 6.46
+        },
+        {
+          "elapsedSeconds": 2700,
+          "depthInches": 6.46
+        },
+        {
+          "elapsedSeconds": 2760,
+          "depthInches": 6.46
+        },
+        {
+          "elapsedSeconds": 2820,
+          "depthInches": 6.46
+        },
+        {
+          "elapsedSeconds": 2880,
+          "depthInches": 6.46
+        },
+        {
+          "elapsedSeconds": 2940,
+          "depthInches": 6.46
+        },
+        {
+          "elapsedSeconds": 3000,
+          "depthInches": 6.5
+        },
+        {
+          "elapsedSeconds": 3060,
+          "depthInches": 6.5
+        },
+        {
+          "elapsedSeconds": 3120,
+          "depthInches": 6.54
+        },
+        {
+          "elapsedSeconds": 3180,
+          "depthInches": 6.54
+        },
+        {
+          "elapsedSeconds": 3240,
+          "depthInches": 6.69
+        },
+        {
+          "elapsedSeconds": 3300,
+          "depthInches": 6.73
+        },
+        {
+          "elapsedSeconds": 3360,
+          "depthInches": 6.73
+        },
+        {
+          "elapsedSeconds": 3420,
+          "depthInches": 6.77
+        },
+        {
+          "elapsedSeconds": 3480,
+          "depthInches": 6.73
+        },
+        {
+          "elapsedSeconds": 3540,
+          "depthInches": 6.77
+        },
+        {
+          "elapsedSeconds": 3600,
+          "depthInches": 6.77
+        },
+        {
+          "elapsedSeconds": 3660,
+          "depthInches": 6.81
+        },
+        {
+          "elapsedSeconds": 3720,
+          "depthInches": 6.77
+        },
+        {
+          "elapsedSeconds": 3780,
+          "depthInches": 6.77
+        },
+        {
+          "elapsedSeconds": 3840,
+          "depthInches": 6.69
+        },
+        {
+          "elapsedSeconds": 3900,
+          "depthInches": 6.61
+        },
+        {
+          "elapsedSeconds": 3960,
+          "depthInches": 6.54
+        },
+        {
+          "elapsedSeconds": 4020,
+          "depthInches": 6.5
+        },
+        {
+          "elapsedSeconds": 4080,
+          "depthInches": 6.38
+        },
+        {
+          "elapsedSeconds": 4140,
+          "depthInches": 6.34
+        },
+        {
+          "elapsedSeconds": 4201,
+          "depthInches": 6.22
+        },
+        {
+          "elapsedSeconds": 4261,
+          "depthInches": 6.06
+        },
+        {
+          "elapsedSeconds": 4321,
+          "depthInches": 6.02
+        },
+        {
+          "elapsedSeconds": 4381,
+          "depthInches": 5.98
+        },
+        {
+          "elapsedSeconds": 4441,
+          "depthInches": 5.98
+        },
+        {
+          "elapsedSeconds": 4501,
+          "depthInches": 5.79
+        },
+        {
+          "elapsedSeconds": 4561,
+          "depthInches": 5.71
+        },
+        {
+          "elapsedSeconds": 4621,
+          "depthInches": 5.67
+        },
+        {
+          "elapsedSeconds": 4681,
+          "depthInches": 5.67
+        },
+        {
+          "elapsedSeconds": 4741,
+          "depthInches": 5.67
+        },
+        {
+          "elapsedSeconds": 4801,
+          "depthInches": 5.63
+        },
+        {
+          "elapsedSeconds": 4861,
+          "depthInches": 5.59
+        },
+        {
+          "elapsedSeconds": 4921,
+          "depthInches": 5.63
+        },
+        {
+          "elapsedSeconds": 4981,
+          "depthInches": 5.59
+        },
+        {
+          "elapsedSeconds": 5041,
+          "depthInches": 5.51
+        },
+        {
+          "elapsedSeconds": 5101,
+          "depthInches": 5.47
+        },
+        {
+          "elapsedSeconds": 5161,
+          "depthInches": 5.47
+        },
+        {
+          "elapsedSeconds": 5221,
+          "depthInches": 5.47
+        },
+        {
+          "elapsedSeconds": 5281,
+          "depthInches": 5.28
+        },
+        {
+          "elapsedSeconds": 5341,
+          "depthInches": 5.24
+        },
+        {
+          "elapsedSeconds": 5401,
+          "depthInches": 5.24
+        },
+        {
+          "elapsedSeconds": 5461,
+          "depthInches": 5.24
+        },
+        {
+          "elapsedSeconds": 5521,
+          "depthInches": 5.24
+        },
+        {
+          "elapsedSeconds": 5581,
+          "depthInches": 5.08
+        },
+        {
+          "elapsedSeconds": 5641,
+          "depthInches": 5.04
+        },
+        {
+          "elapsedSeconds": 5701,
+          "depthInches": 4.92
+        },
+        {
+          "elapsedSeconds": 5761,
+          "depthInches": 4.88
+        },
+        {
+          "elapsedSeconds": 5821,
+          "depthInches": 4.84
+        },
+        {
+          "elapsedSeconds": 5881,
+          "depthInches": 4.76
+        },
+        {
+          "elapsedSeconds": 5941,
+          "depthInches": 4.57
+        },
+        {
+          "elapsedSeconds": 6000,
+          "depthInches": 4.21
+        },
+        {
+          "elapsedSeconds": 6060,
+          "depthInches": 4.17
+        },
+        {
+          "elapsedSeconds": 6120,
+          "depthInches": 4.09
+        },
+        {
+          "elapsedSeconds": 6180,
+          "depthInches": 4.09
+        },
+        {
+          "elapsedSeconds": 6240,
+          "depthInches": 3.98
+        },
+        {
+          "elapsedSeconds": 6300,
+          "depthInches": 3.86
+        },
+        {
+          "elapsedSeconds": 6360,
+          "depthInches": 3.66
+        },
+        {
+          "elapsedSeconds": 6420,
+          "depthInches": 3.66
+        },
+        {
+          "elapsedSeconds": 6480,
+          "depthInches": 3.5
+        },
+        {
+          "elapsedSeconds": 6540,
+          "depthInches": 3.46
+        },
+        {
+          "elapsedSeconds": 6600,
+          "depthInches": 3.35
+        },
+        {
+          "elapsedSeconds": 6660,
+          "depthInches": 3.19
+        },
+        {
+          "elapsedSeconds": 6720,
+          "depthInches": 3.07
+        },
+        {
+          "elapsedSeconds": 6780,
+          "depthInches": 2.72
+        },
+        {
+          "elapsedSeconds": 6840,
+          "depthInches": 2.68
+        },
+        {
+          "elapsedSeconds": 6900,
+          "depthInches": 2.64
+        },
+        {
+          "elapsedSeconds": 6960,
+          "depthInches": 2.64
+        },
+        {
+          "elapsedSeconds": 7020,
+          "depthInches": 2.64
+        },
+        {
+          "elapsedSeconds": 7080,
+          "depthInches": 2.2
+        },
+        {
+          "elapsedSeconds": 7140,
+          "depthInches": 2.13
+        },
+        {
+          "elapsedSeconds": 7200,
+          "depthInches": 2.09
+        },
+        {
+          "elapsedSeconds": 7260,
+          "depthInches": 2.09
+        },
+        {
+          "elapsedSeconds": 7320,
+          "depthInches": 1.93
+        },
+        {
+          "elapsedSeconds": 7380,
+          "depthInches": 1.89
+        },
+        {
+          "elapsedSeconds": 7440,
+          "depthInches": 1.85
+        },
+        {
+          "elapsedSeconds": 7500,
+          "depthInches": 1.85
+        },
+        {
+          "elapsedSeconds": 7560,
+          "depthInches": 1.81
+        },
+        {
+          "elapsedSeconds": 7620,
+          "depthInches": 1.69
+        },
+        {
+          "elapsedSeconds": 7680,
+          "depthInches": 1.65
+        },
+        {
+          "elapsedSeconds": 7740,
+          "depthInches": 1.57
+        },
+        {
+          "elapsedSeconds": 7800,
+          "depthInches": 1.42
+        },
+        {
+          "elapsedSeconds": 7860,
+          "depthInches": 1.38
+        },
+        {
+          "elapsedSeconds": 7920,
+          "depthInches": 1.18
+        },
+        {
+          "elapsedSeconds": 7980,
+          "depthInches": 1.1
+        },
+        {
+          "elapsedSeconds": 8040,
+          "depthInches": 1.1
+        },
+        {
+          "elapsedSeconds": 8100,
+          "depthInches": 1.02
+        },
+        {
+          "elapsedSeconds": 8160,
+          "depthInches": 0.87
+        },
+        {
+          "elapsedSeconds": 8220,
+          "depthInches": 0.83
+        },
+        {
+          "elapsedSeconds": 8340,
+          "depthInches": 0.75
+        },
+        {
+          "elapsedSeconds": 8400,
+          "depthInches": 0.59
+        },
+        {
+          "elapsedSeconds": 8460,
+          "depthInches": 0.0
+        }
+      ],
+      "historyNote": "Installed 2026-04-03; neighbouring tidal sensors excluded from the rainfall replay pool.",
+      "location": {
+        "latitude": 40.59832,
+        "longitude": -73.77696,
+        "borough": "Queens",
+        "communityBoard": "414",
+        "zipcode": null
+      }
+    },
+    {
+      "eventId": "backup",
+      "rank": "backup",
+      "sensorId": "SI-murray-hulbert-ave-bay-st-2upklc",
+      "sensorName": "SI - Bay St/Front St",
+      "startUtc": "2026-09-01T22:30:40.000Z",
+      "endUtc": "2026-09-02T00:26:38.000Z",
+      "maxDepthIn": 8.94,
+      "durationMin": 115.96,
+      "onsetMin": 11.99,
+      "drainMin": 103.96,
+      "durationAbove4InMin": 35.12,
+      "durationAbove12InMin": 0,
+      "durationAbove24InMin": 0,
+      "tidalInfluence": "No",
+      "evidenceLabel": "measured",
+      "profileStatus": "unavailable",
+      "profile": null,
+      "historyNote": "Same-day SI neighbours (Minthorne 13.43in, Hamden, Grimsby) are tidally_influenced=Yes and were excluded; Richmond Terrace did not cross 5in that night. A 4.45in reading is a real flood under the 10mm event definition, it simply sits below the pool's >=5in line.",
+      "location": {
+        "latitude": 40.62065,
+        "longitude": -74.07101,
+        "borough": "Staten Island",
+        "communityBoard": "501",
+        "zipcode": null
+      }
+    }
+  ],
   "provenance": {
     "dataset": "FloodNet NYC via NYC Open Data",
     "datasetId": "aq7i-eu5q",
     "url": "https://data.cityofnewyork.us/resource/aq7i-eu5q.json",
+    "snapshotAsOf": "2026-10-10T12:40:00Z",
+    "updatedAt": "2026-10-01T13:00:21Z"
+  },
+  "mapProvenance": {
+    "dataset": "FloodNet sensor deployment metadata via NYC Open Data",
+    "datasetId": "kb2e-tjy3",
+    "url": "https://data.cityofnewyork.us/resource/kb2e-tjy3.json",
     "snapshotAsOf": "2026-10-10T12:40:00Z",
     "updatedAt": "2026-10-01T13:00:21Z"
   },
@@ -1188,6 +2583,6 @@
       "status": "not_used",
       "reason": "No present-condition or passability inference is made."
     },
-    "refusalNote": "This card replays one historical FloodNet record. It does not establish present road passability or drainage condition, and it says nothing about locations without a selected sensor record."
+    "refusalNote": "This view shows selected historical FloodNet sensor records only. It does not establish present road passability or drainage condition, and it does not describe locations without a selected sensor record."
   }
 }
