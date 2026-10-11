@@ -1,0 +1,191 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: >-
+  PLUVIA early warning delivery. An Amazon SNS topic carries the warning, an AWS
+  Lambda function validates and publishes it, and an Amazon API Gateway HTTP API
+  accepts the request from the PLUVIA page. The subscribed address receives a
+  confirmation mail from AWS and must click the link once before any warning is
+  delivered.
+
+Parameters:
+  AllowedOrigin:
+    Type: String
+    Description: >-
+      The exact origin the PLUVIA page is served from, for example
+      https://d3rmpa0l6h95rp.cloudfront.net with no trailing slash.
+    AllowedPattern: "^https?://[A-Za-z0-9.:-]+$"
+  AlertEmail:
+    Type: String
+    Description: >-
+      The address that should receive early warnings. AWS sends it a confirmation
+      mail as soon as this stack is created; warnings only start after the link in
+      that mail is clicked.
+    AllowedPattern: "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$"
+
+Resources:
+  AlertTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      TopicName: !Sub "${AWS::StackName}-warnings"
+      DisplayName: PLUVIA
+
+  AlertSubscription:
+    Type: AWS::SNS::Subscription
+    Properties:
+      TopicArn: !Ref AlertTopic
+      Protocol: email
+      Endpoint: !Ref AlertEmail
+
+  AlertLogGroup:
+    Type: AWS::Logs::LogGroup
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Properties:
+      LogGroupName: !Sub "/aws/lambda/${AWS::StackName}-publisher"
+      RetentionInDays: 14
+
+  AlertRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: publish-and-log
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action: sns:Publish
+                Resource: !Ref AlertTopic
+              - Effect: Allow
+                Action:
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource: !GetAtt AlertLogGroup.Arn
+
+  AlertFunction:
+    Type: AWS::Lambda::Function
+    DependsOn: AlertLogGroup
+    Properties:
+      FunctionName: !Sub "${AWS::StackName}-publisher"
+      Runtime: python3.12
+      Handler: index.handler
+      Role: !GetAtt AlertRole.Arn
+      Timeout: 10
+      MemorySize: 128
+      ReservedConcurrentExecutions: 5
+      Environment:
+        Variables:
+          TOPIC_ARN: !Ref AlertTopic
+          ALLOWED_ORIGIN: !Ref AllowedOrigin
+      Code:
+        ZipFile: |
+          import json, os, boto3
+
+          sns = boto3.client("sns")
+          TOPIC = os.environ["TOPIC_ARN"]
+          ORIGIN = os.environ["ALLOWED_ORIGIN"]
+          ALLOWED = {"place", "sensor", "day", "rainMm", "percent", "depthCm", "detail"}
+          HEAD = {"content-type": "application/json", "access-control-allow-origin": ORIGIN}
+
+          def reply(code, body):
+              return {"statusCode": code, "headers": HEAD, "body": json.dumps(body)}
+
+          def handler(event, context):
+              http = event.get("requestContext", {}).get("http", {})
+              if http.get("method") == "OPTIONS":
+                  head = dict(HEAD)
+                  head["access-control-allow-methods"] = "POST,OPTIONS"
+                  head["access-control-allow-headers"] = "content-type"
+                  return {"statusCode": 204, "headers": head, "body": ""}
+              try:
+                  body = json.loads(event.get("body") or "{}")
+              except Exception:
+                  return reply(400, {"error": "invalid_json"})
+              if not isinstance(body, dict):
+                  return reply(400, {"error": "invalid_json"})
+              extra = sorted(set(body) - ALLOWED)
+              if extra:
+                  return reply(400, {"error": "unexpected_fields", "fields": extra})
+              place = str(body.get("place", ""))[:120].strip()
+              sensor = str(body.get("sensor", ""))[:120].strip()
+              day = str(body.get("day", ""))[:40].strip()
+              detail = str(body.get("detail", ""))[:900].strip()
+              if not place or not sensor or not detail:
+                  return reply(400, {"error": "missing_fields"})
+              message = (
+                  "PLUVIA early warning\n\n"
+                  "Place: %s\nNearest sensor: %s\nForecast day: %s\n\n%s\n\n"
+                  "This warning combines a public rain forecast with what this sensor "
+                  "recorded on comparable rain days in the past. The counts behind it are "
+                  "in the text above. Nothing is modelled or estimated.\n"
+              ) % (place, sensor, day or "not given", detail)
+              out = sns.publish(
+                  TopicArn=TOPIC,
+                  Subject=("PLUVIA early warning: %s" % place)[:99],
+                  Message=message,
+              )
+              return reply(202, {"status": "queued", "messageId": out["MessageId"]})
+
+  AlertApi:
+    Type: AWS::ApiGatewayV2::Api
+    Properties:
+      Name: !Sub "${AWS::StackName}-api"
+      ProtocolType: HTTP
+      CorsConfiguration:
+        AllowOrigins:
+          - !Ref AllowedOrigin
+        AllowMethods:
+          - POST
+          - OPTIONS
+        AllowHeaders:
+          - content-type
+        MaxAge: 300
+
+  AlertIntegration:
+    Type: AWS::ApiGatewayV2::Integration
+    Properties:
+      ApiId: !Ref AlertApi
+      IntegrationType: AWS_PROXY
+      IntegrationUri: !GetAtt AlertFunction.Arn
+      PayloadFormatVersion: "2.0"
+
+  AlertRoute:
+    Type: AWS::ApiGatewayV2::Route
+    Properties:
+      ApiId: !Ref AlertApi
+      RouteKey: POST /alerts
+      Target: !Sub "integrations/${AlertIntegration}"
+
+  AlertStage:
+    Type: AWS::ApiGatewayV2::Stage
+    Properties:
+      ApiId: !Ref AlertApi
+      StageName: $default
+      AutoDeploy: true
+      DefaultRouteSettings:
+        ThrottlingRateLimit: 5
+        ThrottlingBurstLimit: 10
+
+  AlertPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref AlertFunction
+      Action: lambda:InvokeFunction
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub "arn:${AWS::Partition}:execute-api:${AWS::Region}:${AWS::AccountId}:${AlertApi}/*/*/alerts"
+
+Outputs:
+  AlertApiUrl:
+    Description: POST a warning to this address, path /alerts
+    Value: !GetAtt AlertApi.ApiEndpoint
+  TopicArn:
+    Description: The SNS topic that carries the warnings
+    Value: !Ref AlertTopic
+  LogGroupName:
+    Description: CloudWatch log group for the publisher
+    Value: !Ref AlertLogGroup

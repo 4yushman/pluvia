@@ -1989,3 +1989,16 @@ code {
 .watch-panel h2 { color: var(--water-deep); }
 .load-button { background: var(--water-deep); }
 .load-button:hover { background: #0d5f82; }
+
+.watch-email {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin-top: 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: #eef6f9;
+}
+.watch-email-status { font-size: 12px; color: var(--muted); }
+.watch-email-status.is-good { color: #1e6f66; font-weight: 700; }

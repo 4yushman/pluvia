@@ -76,6 +76,17 @@
   const DRILL_MM = 30;
   const DRILL_HOURS = 6;
   const FORECAST_TIMEOUT_MS = 12000;
+  // Set ?alerts=<https endpoint> to enable email delivery through the AWS stack.
+  const ALERT_ENDPOINT = (() => {
+    try {
+      const raw = new URLSearchParams(window.location.search).get("alerts");
+      if (!raw) return null;
+      const parsed = new URL(raw);
+      return parsed.protocol === "https:" ? `${parsed.origin}${parsed.pathname.replace(/\/$/, "")}/alerts` : null;
+    } catch (error) {
+      return null;
+    }
+  })();
 
   const loadStatus = document.getElementById("load-status");
   const fallbackPanel = document.getElementById("fallback-panel");
@@ -128,6 +139,7 @@
   let accuracyCircle = null;
   let tileWatchdog = null;
   let basemapGeneration = 0;
+  const lastAssessment = {};
 
   window.addEventListener("error", (event) => {
     const detail = event && event.message ? event.message : "unknown error";
@@ -1111,7 +1123,12 @@
       return `<li${active ? ' class="is-active"' : ""}>${item.minIn === 0 ? "under 2" : `${item.minIn}+`} in
         &middot; ${escapeHtml(item.label)} &middot; ${need}</li>`;
     }).join("");
-    return `<article class="watch-card">${head}${banner}
+    const emailButton = triggered.length && ALERT_ENDPOINT
+      ? `<div class="watch-email"><button type="button" class="load-button" data-email="${safeId}">Email me this warning</button>
+          <span class="load-hint">Sent through the PLUVIA alert stack on AWS to the confirmed address.</span>
+          <span class="watch-email-status" data-email-status="${safeId}"></span></div>`
+      : "";
+    return `<article class="watch-card">${head}${banner}${emailButton}
       <div class="watch-days">${days.map((day) => dayRowMarkup(day, sensor, false)).join("")}</div>
       <div class="watch-drill" data-drill-target="${safeId}" hidden></div>
       <details class="watch-rule-box">
@@ -1150,6 +1167,10 @@
         }))
         .catch((error) => ({ entry, sensor, days: [], failure: error.message || String(error) }));
     })).then((results) => {
+      results.forEach((item) => {
+        const hit = item.days.find((day) => day.level === "warning");
+        if (hit) lastAssessment[item.entry.id] = hit;
+      });
       watchListEl.innerHTML = results
         .map((item) => watchCardMarkup(item.entry, item.sensor, item.days, item.failure))
         .join("");
@@ -1162,6 +1183,48 @@
     });
   }
 
+  function sendWarningEmail(id, button) {
+    const entry = loadWatchlist().find((item) => item.id === id);
+    const sensor = entry ? watchSensorFor(entry) : null;
+    const note = watchListEl.querySelector(`[data-email-status="${CSS.escape(id)}"]`);
+    if (!entry || !sensor || !ALERT_ENDPOINT) return;
+    const day = lastAssessment[id];
+    if (!day) return;
+    button.disabled = true;
+    if (note) note.textContent = "Sending\u2026";
+    const detail = `${formatNumber(day.mm, 1)} mm of rain is forecast. `
+      + `${day.sensorDays} of the ${day.cityDays} days that reached ${day.threshold} mm since this sensor `
+      + `was installed ended with standing water here, which is ${Math.round(day.rate * 100)} percent. `
+      + (day.depth === null ? "" : `Water here usually reaches ${formatNumber(day.depth, 1)} in `
+        + `(${inchesToCm(day.depth)} cm), ${day.band.label}.`);
+    fetch(ALERT_ENDPOINT, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        place: entry.label,
+        sensor: sensor.sensorName,
+        day: String(day.date),
+        rainMm: Number(day.mm.toFixed(1)),
+        percent: Math.round(day.rate * 100),
+        depthCm: day.depth === null ? 0 : inchesToCm(day.depth),
+        detail
+      })
+    }).then((response) => response.json().then((payload) => ({ ok: response.ok, payload })))
+      .then(({ ok, payload }) => {
+        if (note) {
+          note.textContent = ok
+            ? `Queued on AWS. Message id ${payload.messageId}.`
+            : `Refused: ${payload.error || "unknown"}.`;
+          note.classList.toggle("is-good", ok);
+        }
+        button.disabled = !ok;
+      })
+      .catch((error) => {
+        if (note) note.textContent = `Could not reach the alert endpoint. ${error.message || error}`;
+        button.disabled = false;
+      });
+  }
+
   function onWatchListClick(event) {
     const removeTarget = event.target.closest("[data-remove]");
     if (removeTarget) {
@@ -1169,7 +1232,12 @@
       return;
     }
     const drillTarget = event.target.closest("[data-drill]");
-    if (drillTarget) runDrill(drillTarget.getAttribute("data-drill"));
+    if (drillTarget) {
+      runDrill(drillTarget.getAttribute("data-drill"));
+      return;
+    }
+    const emailTarget = event.target.closest("[data-email]");
+    if (emailTarget) sendWarningEmail(emailTarget.getAttribute("data-email"), emailTarget);
   }
 
   function renderScenario() {
