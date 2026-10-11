@@ -7,3 +7,4 @@ dist/
 *.key
 *.pem
 .DS_Store
+data/nyc/raw/drainage_311_*.json
