@@ -7,9 +7,9 @@
     <meta name="description" content="Find a location in New York City and see what FloodNet sensors actually recorded there, then run a what-if check against that recorded history.">
     <title>PLUVIA | What the sensors recorded near you</title>
     <link rel="stylesheet" href="vendor/leaflet/leaflet.css?v=1.9.4">
-    <link rel="stylesheet" href="styles.css?v=11">
+    <link rel="stylesheet" href="styles.css?v=12">
     <script src="vendor/leaflet/leaflet.js?v=1.9.4" defer></script>
-    <script src="app.js?v=11" defer></script>
+    <script src="app.js?v=12" defer></script>
   </head>
   <body>
     <div class="page-shell">
@@ -29,9 +29,8 @@
           <div class="eyebrow"><span class="eyebrow-dot"></span> Start with your location</div>
           <h1 id="page-title">See what the sensors recorded near you.</h1>
           <p class="intro-copy">
-            Press the locate button on the map, zoom in and click your own street, or type a New York City ZIP code or borough.
-            PLUVIA ranks the FloodNet sensors around that point, shows what each one actually
-            measured in past storms, and lets you replay one storm minute by minute.
+            Find your street, see what the water actually did there, and get warned before the next storm.
+            <i class="info-dot" tabindex="0" role="img" aria-label="How to use this page" title="Press the locate button on the map, zoom in and click your own street, or type a New York City ZIP code, borough or street. PLUVIA ranks the FloodNet sensors around that point, shows what each one actually measured in past storms, and lets you replay one storm minute by minute.">i</i>
           </p>
           <form class="locate-row" id="locate-form" autocomplete="off">
             <label class="visually-hidden" for="place-search">ZIP code, borough, or sensor name</label>
@@ -51,10 +50,8 @@
             <button class="ghost-button" type="button" id="watch-refresh">Check the forecast again</button>
           </div>
           <p class="watch-intro">
-            PLUVIA takes the public rain forecast for each place you watch and compares every
-            forecast day with what the nearest sensor actually recorded on comparable rain days
-            in the past. A warning is raised only when both the forecast and that history cross
-            the trigger. The count behind every warning is printed with it.
+            Live rain forecast, checked against what actually happened here before.
+            <i class="info-dot" tabindex="0" role="img" aria-label="How the watch works" title="PLUVIA takes the public rain forecast for each place you watch and compares every forecast day with what the nearest sensor actually recorded on comparable rain days in the past. A warning is raised only when both the forecast and that history cross the trigger. The count behind every warning is printed with it.">i</i>
           </p>
           <div id="watch-list" class="watch-list"></div>
           <p id="watch-status" class="watch-status" role="status" aria-live="polite"></p>
@@ -83,8 +80,8 @@
               <span class="map-kind">Zoom in, click your street, or use the locate button</span>
             </div>
             <p class="map-note">
-              Marker size and colour show how many separate days each sensor recorded standing water in
-              this frozen snapshot. These are measured past events, not a forecast.
+              Bigger, warmer dots flooded on more days.
+              <i class="info-dot" tabindex="0" role="img" aria-label="What the markers mean" title="Marker size and colour show how many separate days each sensor recorded standing water in this frozen snapshot. These are measured past events. Click any dot to move your pin to it.">i</i>
             </p>
             <p id="map-notice" class="map-notice" hidden></p>
             <div class="map-frame">
@@ -119,7 +116,9 @@
               <ol id="nearest-list" class="nearest-list"></ol>
               <div id="watch-add-row" class="watch-add-row" hidden>
                 <button class="load-button" type="button" id="watch-add">Watch this location</button>
-                <span class="load-hint">Checks the rain forecast here against this sensor's own record.</span>
+                <span class="load-hint">Get warned here before the next storm.
+                  <i class="info-dot" tabindex="0" role="img" aria-label="What watching does" title="PLUVIA saves this place in your browser, pulls the public rain forecast for it, and compares every forecast day against what the nearest sensor recorded on comparable rain days. Nothing is sent anywhere.">i</i>
+                </span>
               </div>
             </section>
 

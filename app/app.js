@@ -75,6 +75,7 @@
   ];
   const DRILL_MM = 30;
   const DRILL_HOURS = 6;
+  const FORECAST_TIMEOUT_MS = 12000;
 
   const loadStatus = document.getElementById("load-status");
   const fallbackPanel = document.getElementById("fallback-panel");
@@ -661,6 +662,12 @@
   }
 
   function onSensorPicked(sensorId) {
+    const picked = sensors.find((item) => item.sensorId === sensorId);
+    if (picked) {
+      placeSearch.value = picked.sensorName || "";
+      setPin(picked.latitude, picked.longitude, `Pin moved to ${picked.sensorName}.`);
+      if (map) map.setView([picked.latitude, picked.longitude], Math.max(map.getZoom(), 16));
+    }
     const sensor = sensors.find((item) => item.sensorId === sensorId);
     if (!sensor) return;
     selectedSensorId = sensorId;
@@ -889,7 +896,16 @@
   function fetchForecast(latitude, longitude) {
     const url = `${FORECAST_ENDPOINT}?latitude=${latitude.toFixed(4)}&longitude=${longitude.toFixed(4)}`
       + "&daily=precipitation_sum,precipitation_hours&timezone=America%2FNew_York&forecast_days=7";
-    return fetch(url, { cache: "no-store" })
+    // Without a deadline one unreachable request leaves every card spinning,
+    // so the request is abandoned after FORECAST_TIMEOUT_MS and reported.
+    const controller = typeof AbortController === "function" ? new AbortController() : null;
+    const timer = controller
+      ? window.setTimeout(() => controller.abort(), FORECAST_TIMEOUT_MS)
+      : null;
+    const options = { cache: "no-store" };
+    if (controller) options.signal = controller.signal;
+    return fetch(url, options)
+      .finally(() => { if (timer) window.clearTimeout(timer); })
       .then((response) => {
         if (!response.ok) throw new Error(`forecast service answered ${response.status}`);
         return response.json();
