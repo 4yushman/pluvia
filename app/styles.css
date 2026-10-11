@@ -2002,3 +2002,16 @@ code {
 }
 .watch-email-status { font-size: 12px; color: var(--muted); }
 .watch-email-status.is-good { color: #1e6f66; font-weight: 700; }
+
+.nearest-details { margin-top: 14px; border-top: 1px solid var(--line); padding-top: 12px; }
+.nearest-details > summary {
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--water-deep);
+  list-style: none;
+}
+.nearest-details > summary::-webkit-details-marker { display: none; }
+.nearest-details > summary::before { content: "\25B8 "; display: inline-block; transition: transform .15s ease; }
+.nearest-details[open] > summary::before { content: "\25BE "; }
+.selection-intro { font-size: 14px; color: var(--muted); margin: 0 0 14px; line-height: 1.5; }

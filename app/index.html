@@ -4,12 +4,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#102a43">
-    <meta name="description" content="Find a location in New York City and see what FloodNet sensors actually recorded there, then run a what-if check against that recorded history.">
+    <meta name="description" content="Find a location in New York City and see what has actually happened to it: measured water depth, nearby drainage complaints, six years of rainfall, and a live forecast checked against all three.">
     <title>PLUVIA | What the sensors recorded near you</title>
     <link rel="stylesheet" href="vendor/leaflet/leaflet.css?v=1.9.4">
-    <link rel="stylesheet" href="styles.css?v=13">
+    <link rel="stylesheet" href="styles.css?v=15">
     <script src="vendor/leaflet/leaflet.js?v=1.9.4" defer></script>
-    <script src="app.js?v=13" defer></script>
+    <script src="app.js?v=15" defer></script>
   </head>
   <body>
     <div class="page-shell">
@@ -21,16 +21,16 @@
             <span>Know the Impact, Not Just the Rain.</span>
           </span>
         </a>
-        <span class="header-note">New York City &middot; FloodNet records</span>
+        <span class="header-note">New York City &middot; FloodNet, 311 and rainfall records</span>
       </header>
 
       <main id="top">
         <section class="locate-panel" aria-labelledby="page-title">
           <div class="eyebrow"><span class="eyebrow-dot"></span> Start with your location</div>
-          <h1 id="page-title">See what the sensors recorded near you.</h1>
+          <h1 id="page-title">See what water has done on your street.</h1>
           <p class="intro-copy">
             Find your street, see what the water actually did there, and get warned before the next storm.
-            <i class="info-dot" tabindex="0" role="img" aria-label="How to use this page" title="Press the locate button on the map, zoom in and click your own street, or type a New York City ZIP code, borough or street. PLUVIA ranks the FloodNet sensors around that point, shows what each one actually measured in past storms, and lets you replay one storm minute by minute.">i</i>
+            <i class="info-dot" tabindex="0" role="img" aria-label="How to use this page" title="Press the locate button on the map, zoom in and click your own street, or type a New York City ZIP code, borough or street. PLUVIA then pulls together four public records for that point: measured water depth from FloodNet, 311 drainage complaints within 300 m, six years of daily rainfall, and the live rain forecast. Those four decide whether your street gets a warning.">i</i>
           </p>
           <form class="locate-row" id="locate-form" autocomplete="off">
             <label class="visually-hidden" for="place-search">ZIP code, borough, or sensor name</label>
@@ -112,20 +112,27 @@
                   </select>
                 </label>
               </div>
-              <p id="nearest-note" class="selection-hint">Drop a pin on the map or search to rank sensors by distance.</p>
-              <ol id="nearest-list" class="nearest-list"></ol>
               <div id="watch-add-row" class="watch-add-row" hidden>
                 <button class="load-button" type="button" id="watch-add">Watch this location</button>
                 <span class="load-hint">Get warned here before the next storm.
                   <i class="info-dot" tabindex="0" role="img" aria-label="What watching does" title="PLUVIA saves this place in your browser, pulls the public rain forecast for it, and compares every forecast day against what the nearest sensor recorded on comparable rain days. Nothing is sent anywhere.">i</i>
                 </span>
               </div>
+              <details class="nearest-details">
+                <summary>Show the sensors ranked around this point</summary>
+                <p id="nearest-note" class="selection-hint">Drop a pin on the map or search to rank sensors by distance.</p>
+                <ol id="nearest-list" class="nearest-list"></ol>
+              </details>
             </section>
 
             <section class="selection-panel" aria-labelledby="selection-heading">
-              <p class="panel-kicker">Historical replay</p>
-              <h2 id="selection-heading">Choose a storm event</h2>
-              <label class="select-label" for="event-select">Snapshot event</label>
+              <p class="panel-kicker">Recorded minute by minute</p>
+              <h2 id="selection-heading">Watch a real flood happen</h2>
+              <p class="selection-intro">These are floods a sensor actually measured, reading by reading.
+                Pick one and press play to watch the water rise and drain.
+                <i class="info-dot" tabindex="0" role="img" aria-label="What a replay is" title="FloodNet sensors report water depth every few minutes. PLUVIA stores those readings for selected floods and plays them back in order. Nothing is animated or interpolated; each point on the line is one reading the sensor took.">i</i>
+              </p>
+              <label class="select-label" for="event-select">Pick a flood</label>
               <select id="event-select" class="event-select"></select>
               <p id="selection-hint" class="selection-hint">Select a marker or event to update the card.</p>
               <div id="selection-summary" class="selection-summary"></div>
