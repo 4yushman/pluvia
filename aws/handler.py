@@ -12,7 +12,7 @@ from datetime import datetime, timezone
 LOGGER = logging.getLogger()
 LOGGER.setLevel(logging.INFO)
 
-# These IDs are the event IDs in PLUVIA/demo/card_data.json for this snapshot.
+# These IDs are the event IDs in app/card_data.json for this snapshot.
 ALLOWED_EVENT_IDS = frozenset({"R1-primary", "R2", "R3", "backup"})
 ALLOWED_OBSERVATIONS = frozenset(
     {"water_visible", "no_water_visible", "not_sure"}

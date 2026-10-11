@@ -6,11 +6,11 @@ entirely from dated public snapshots stored in `data/nyc/`.
 ## Run it
 
 ```
-python3 PLUVIA/demo/build_card_data.py
+python3 app/build_card_data.py
 python3 -m http.server 8000
 ```
 
-Then open <http://localhost:8000/PLUVIA/demo/index.html>.
+Then open <http://localhost:8000/app/index.html>.
 
 The page loads `card_data.json` over HTTP on its own. If you open `index.html` straight from
 disk the browser blocks that read, so the page falls back to a file picker. Both paths show
@@ -48,7 +48,7 @@ exactly the same data.
 | `data/nyc/raw/nyc_daily_rain_*.json` | Daily rainfall and rain hours, Open-Meteo archive |
 | `data/nyc/raw/drainage_311_*.json` | Optional 311 drainage complaints, dataset `erm2-nwe9` |
 | `data/nyc/derived/drainage_near_sensors_*.json` | Small join written by the build script |
-| `PLUVIA/demo/nyc_boroughs.geojson` | Simplified borough outlines, drawn when tiles are absent |
+| `app/nyc_boroughs.geojson` | Simplified borough outlines, drawn when tiles are absent |
 
 The 311 export is large, so the build script reads it once and writes the small derived file
 next to it. Only the derived file needs to be committed.

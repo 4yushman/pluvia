@@ -9,7 +9,7 @@ A record of the deployment this kit was actually run through, so the claims in `
 | Date | 11 October 2026 |
 | Stack name | `pluvia-p3` |
 | Region | `ap-southeast-2` |
-| Template | `PLUVIA/aws/template.yaml` from this repository, uploaded through the CloudFormation console |
+| Template | `aws/template.yaml` from this repository, uploaded through the CloudFormation console |
 | Parameter | `AllowedOrigin = http://localhost:8000` |
 | Capability | `CAPABILITY_IAM`, for the single scoped Lambda execution role in the template |
 

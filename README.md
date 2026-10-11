@@ -123,10 +123,10 @@ Everything is a frozen, dated snapshot of public data. Nothing is fetched live a
 | NYC Open Data | `erm2-nwe9` | 311 drainage service requests with their closed dates |
 | Open-Meteo | historical archive | 2,109 days of rainfall and rain hours, 2021-01-01 to 2026-10-10 |
 
-`data/nyc/MANIFEST.json` carries a SHA-256 for each captured file. `PLUVIA/demo/build_card_data.py`
+`data/nyc/MANIFEST.json` carries a SHA-256 for each captured file. `app/build_card_data.py`
 verifies those hashes before it will build anything, and refuses on a mismatch.
 
-Borough outlines in `PLUVIA/demo/nyc_boroughs.geojson` are a simplified public boundary file,
+Borough outlines in `app/nyc_boroughs.geojson` are a simplified public boundary file,
 drawn so the map still reads as New York City when street tiles cannot be reached.
 
 ---
@@ -134,15 +134,15 @@ drawn so the map still reads as New York City when street tiles cannot be reache
 ## Run it locally
 
 ```bash
-python3 PLUVIA/demo/build_card_data.py
+python3 app/build_card_data.py
 python3 -m http.server 8000
 ```
 
-- Map and scenario view: <http://localhost:8000/PLUVIA/demo/index.html>
-- Verification form: `http://localhost:8000/PLUVIA/aws/form.html?api=<your ApiUrl>`
+- Map and scenario view: <http://localhost:8000/app/index.html>
+- Verification form: `http://localhost:8000/aws/form.html?api=<your ApiUrl>`
 
-Deploying your own copy of the AWS stack is described in `PLUVIA/aws/README.md`, with the
-captured console walkthrough and outputs in `PLUVIA/aws/DEPLOY_LOG.md`.
+Deploying your own copy of the AWS stack is described in `aws/README.md`, with the
+captured console walkthrough and outputs in `aws/DEPLOY_LOG.md`.
 
 ---
 
@@ -150,14 +150,14 @@ captured console walkthrough and outputs in `PLUVIA/aws/DEPLOY_LOG.md`.
 
 | Path | Contents |
 | --- | --- |
-| `PLUVIA/demo/` | The map, scenario check, replay and evidence card |
-| `PLUVIA/demo/build_card_data.py` | Snapshot verification and the whole join pipeline |
-| `PLUVIA/aws/` | CloudFormation template, Lambda handler, report form, deployment log |
+| `app/` | The map, scenario check, replay and evidence card |
+| `app/build_card_data.py` | Snapshot verification and the whole join pipeline |
+| `aws/` | CloudFormation template, Lambda handler, report form, deployment log |
 | `data/nyc/` | Dated snapshots, QC log and the hash manifest |
 
 ---
 
 ## Licence
 
-MIT. Leaflet 1.9.4 is vendored under `PLUVIA/demo/vendor/leaflet/` with its own BSD-2-Clause
+MIT. Leaflet 1.9.4 is vendored under `app/vendor/leaflet/` with its own BSD-2-Clause
 licence. Map tiles are served by third parties and are background context only.

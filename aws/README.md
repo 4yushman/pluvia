@@ -18,7 +18,7 @@ This is the path used for the recorded deployment. It needs only a browser and a
 
 ```bash
 git clone https://github.com/4yushman/pluvia.git
-cd pluvia/PLUVIA/aws
+cd pluvia/aws
 ```
 
 ### 2. Choose the form origin
@@ -47,7 +47,7 @@ http://localhost:8000
 
 ### 4. Serve the form and submit one report
 
-From the `PLUVIA/aws` directory, serve the kit on the port used in the origin:
+From the `aws` directory, serve the kit on the port used in the origin:
 
 ```bash
 python3 -m http.server 8000

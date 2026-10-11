@@ -6,8 +6,25 @@ import json
 import math
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[2]
 DEMO = Path(__file__).resolve().parent
+
+
+def _find_root(start):
+    """Walk up until the directory holding the data snapshots is found.
+
+    The app folder has been moved before. Locating the root by its contents
+    instead of by a fixed depth means a future move cannot silently break it.
+    """
+    for candidate in (start, *start.parents):
+        if (candidate / "data" / "nyc" / "MANIFEST.json").is_file():
+            return candidate
+    raise SystemExit(
+        "Could not find data/nyc/MANIFEST.json above "
+        f"{start}. Run this script from inside the repository."
+    )
+
+
+ROOT = _find_root(DEMO)
 MANIFEST_PATH = ROOT / "data/nyc/MANIFEST.json"
 CANDIDATES_PATH = ROOT / "data/nyc/selected/replay_candidates_2026-10-10.json"
 PROFILES_PATH = ROOT / "data/nyc/raw/floodnet_replay_profiles_2026-10-10.json"
