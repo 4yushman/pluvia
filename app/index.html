@@ -4,10 +4,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#102a43">
-    <meta name="description" content="A sourced PLUVIA map and replay of selected historical FloodNet events.">
-    <title>PLUVIA | FloodNet event replay</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="app.js" defer></script>
+    <meta name="description" content="Find a location in New York City and see what FloodNet sensors actually recorded there, then run a what-if check against that recorded history.">
+    <title>PLUVIA | What the sensors recorded near you</title>
+    <link rel="stylesheet" href="vendor/leaflet/leaflet.css?v=1.9.4">
+    <link rel="stylesheet" href="styles.css?v=11">
+    <script src="vendor/leaflet/leaflet.js?v=1.9.4" defer></script>
+    <script src="app.js?v=11" defer></script>
   </head>
   <body>
     <div class="page-shell">
@@ -19,41 +21,111 @@
             <span>Know the Impact, Not Just the Rain.</span>
           </span>
         </a>
-        <span class="header-note">NYC · FloodNet replay</span>
+        <span class="header-note">New York City &middot; FloodNet records</span>
       </header>
 
       <main id="top">
-        <section class="load-panel" aria-labelledby="page-title">
-          <div class="eyebrow"><span class="eyebrow-dot"></span> Selected historical events</div>
-          <h1 id="page-title">Explore what the sensors recorded.</h1>
-          <p class="intro-copy">Open the generated card file to view the snapshot map, choose an event, and replay its measured profile.</p>
+        <section class="locate-panel" aria-labelledby="page-title">
+          <div class="eyebrow"><span class="eyebrow-dot"></span> Start with your location</div>
+          <h1 id="page-title">See what the sensors recorded near you.</h1>
+          <p class="intro-copy">
+            Press the locate button on the map, zoom in and click your own street, or type a New York City ZIP code or borough.
+            PLUVIA ranks the FloodNet sensors around that point, shows what each one actually
+            measured in past storms, and lets you replay one storm minute by minute.
+          </p>
+          <form class="locate-row" id="locate-form" autocomplete="off">
+            <label class="visually-hidden" for="place-search">ZIP code, borough, or sensor name</label>
+            <input id="place-search" class="locate-input" type="search" placeholder="ZIP code, borough, sensor name, or lat, lon" inputmode="search">
+            <button class="load-button" type="submit">Find nearest sensors</button>
+            <button class="ghost-button" type="button" id="clear-pin">Clear pin</button>
+          </form>
+          <p id="load-status" class="load-status" role="status" aria-live="polite">Loading the frozen snapshot&hellip;</p>
+        </section>
+
+        <section id="watch-panel" class="watch-panel" aria-labelledby="watch-heading" hidden>
+          <div class="panel-heading">
+            <div>
+              <p class="panel-kicker">Early warning watch</p>
+              <h2 id="watch-heading">Places you are watching</h2>
+            </div>
+            <button class="ghost-button" type="button" id="watch-refresh">Check the forecast again</button>
+          </div>
+          <p class="watch-intro">
+            PLUVIA takes the public rain forecast for each place you watch and compares every
+            forecast day with what the nearest sensor actually recorded on comparable rain days
+            in the past. A warning is raised only when both the forecast and that history cross
+            the trigger. The count behind every warning is printed with it.
+          </p>
+          <div id="watch-list" class="watch-list"></div>
+          <p id="watch-status" class="watch-status" role="status" aria-live="polite"></p>
+        </section>
+
+        <section id="fallback-panel" class="fallback-panel" hidden>
+          <p class="fallback-copy">
+            This page could not read <code>card_data.json</code> automatically, which happens when the
+            page is opened directly from disk. Choose the file to continue, or serve the folder over
+            HTTP so it loads on its own.
+          </p>
           <div class="load-row">
             <button id="choose-file" class="load-button" type="button">Open card_data.json</button>
             <input id="card-file" class="visually-hidden" type="file" accept=".json,application/json">
-            <span class="load-hint">Choose <code>PLUVIA/demo/card_data.json</code></span>
+            <span class="load-hint">Choose <code>app/card_data.json</code></span>
           </div>
-          <p id="load-status" class="load-status" role="status" aria-live="polite">No event card loaded yet.</p>
         </section>
 
         <section id="explorer" class="explorer" hidden>
-          <div class="explorer-grid">
-            <section class="map-panel" aria-labelledby="map-heading">
+          <section class="map-panel" aria-labelledby="map-heading">
+            <div class="panel-heading">
+              <div>
+                <p class="panel-kicker">FloodNet sensor network</p>
+                <h2 id="map-heading">New York City</h2>
+              </div>
+              <span class="map-kind">Zoom in, click your street, or use the locate button</span>
+            </div>
+            <p class="map-note">
+              Marker size and colour show how many separate days each sensor recorded standing water in
+              this frozen snapshot. These are measured past events, not a forecast.
+            </p>
+            <p id="map-notice" class="map-notice" hidden></p>
+            <div class="map-frame">
+              <div id="nyc-map" class="nyc-map"></div>
+              <div class="map-legend" aria-hidden="true">
+                <strong>Days with recorded water</strong>
+                <span class="legend-item"><i class="dot dot-t0"></i> None in this snapshot</span>
+                <span class="legend-item"><i class="dot dot-t1"></i> 1 to 5 days</span>
+                <span class="legend-item"><i class="dot dot-t2"></i> 6 to 30 days</span>
+                <span class="legend-item"><i class="dot dot-t3"></i> 31 days or more</span>
+              </div>
+            </div>
+            <div id="map-provenance" class="map-provenance"></div>
+          </section>
+
+          <div class="result-grid">
+            <section class="nearest-panel" aria-labelledby="nearest-heading">
               <div class="panel-heading">
                 <div>
-                  <p class="panel-kicker">FloodNet sensor metadata</p>
-                  <h2 id="map-heading">Selected sensor locations</h2>
+                  <p class="panel-kicker">Around your point</p>
+                  <h2 id="nearest-heading">Sensors near you</h2>
                 </div>
-                <span class="map-kind">Coordinate view</span>
+                <label class="sort-label">
+                  <span class="visually-hidden">Sort sensors by</span>
+                  <select id="nearest-sort" class="event-select is-compact">
+                    <option value="distance">Sort by distance</option>
+                    <option value="floods">Sort by recorded floods</option>
+                  </select>
+                </label>
               </div>
-              <p class="map-note">Points use snapshot coordinates only. No street geometry is shown. Teal markers have a stored profile; muted markers do not.</p>
-              <div id="map-stage" class="map-stage" role="group" aria-label="Selectable sensor coordinate map"></div>
-              <div id="map-points" class="map-points" aria-label="Sensor locations"></div>
-              <div id="map-provenance" class="map-provenance"></div>
+              <p id="nearest-note" class="selection-hint">Drop a pin on the map or search to rank sensors by distance.</p>
+              <ol id="nearest-list" class="nearest-list"></ol>
+              <div id="watch-add-row" class="watch-add-row" hidden>
+                <button class="load-button" type="button" id="watch-add">Watch this location</button>
+                <span class="load-hint">Checks the rain forecast here against this sensor's own record.</span>
+              </div>
             </section>
 
             <section class="selection-panel" aria-labelledby="selection-heading">
               <p class="panel-kicker">Historical replay</p>
-              <h2 id="selection-heading">Choose an event</h2>
+              <h2 id="selection-heading">Choose a storm event</h2>
               <label class="select-label" for="event-select">Snapshot event</label>
               <select id="event-select" class="event-select"></select>
               <p id="selection-hint" class="selection-hint">Select a marker or event to update the card.</p>
@@ -61,7 +133,67 @@
             </section>
           </div>
 
+          <section id="scenario-panel" class="scenario-panel" aria-labelledby="scenario-heading" hidden>
+            <div class="panel-heading">
+              <div>
+                <p class="panel-kicker">What-if check against recorded history</p>
+                <h2 id="scenario-heading">Scenario check for <span id="scenario-sensor">this sensor</span></h2>
+              </div>
+            </div>
+            <p class="map-note">
+              You type the scenario. PLUVIA answers only from what this sensor has actually recorded.
+              Every input and every rule is printed below, so you can disagree with it.
+            </p>
+            <div class="scenario-controls">
+              <label class="scenario-field">
+                <span>Rain on the day, in millimetres</span>
+                <select id="scenario-rain" class="event-select">
+                  <option value="5">5 mm, light</option>
+                  <option value="10">10 mm, steady</option>
+                  <option value="15">15 mm, moderate</option>
+                  <option value="20" selected>20 mm, heavy</option>
+                  <option value="30">30 mm, very heavy</option>
+                  <option value="40">40 mm, severe</option>
+                  <option value="60">60 mm, cloudburst</option>
+                </select>
+              </label>
+              <label class="scenario-field">
+                <span>How long it rains</span>
+                <select id="scenario-duration" class="event-select">
+                  <option value="1">1 hour</option>
+                  <option value="2">2 hours</option>
+                  <option value="4" selected>4 hours</option>
+                  <option value="8">8 hours</option>
+                  <option value="12">12 hours</option>
+                  <option value="24">All day</option>
+                </select>
+              </label>
+            </div>
+            <div class="scenario-grid">
+              <div>
+                <p class="panel-kicker">Evidence used</p>
+                <div id="scenario-evidence" class="evidence-list"></div>
+                <button type="button" class="ghost-button is-block" id="records-toggle" aria-expanded="false">Show the records behind this</button>
+              </div>
+              <div id="scenario-verdict" class="scenario-verdict"></div>
+            </div>
+            <div id="scenario-records" class="scenario-records" hidden></div>
+          </section>
+
           <div id="card-region" class="card-region" aria-live="polite" aria-label="Selected FloodNet event card"></div>
+
+          <section class="report-cta">
+            <div>
+              <p class="panel-kicker">Add what the sensors cannot see</p>
+              <h2>Saw something different at this location?</h2>
+              <p class="intro-copy">
+                A sensor measures one point. If you were there, your observation adds what the record
+                is missing. The report form asks two closed questions and collects no name, no contact
+                details, and no free text.
+              </p>
+            </div>
+            <a class="load-button" id="report-link" href="../aws/form.html">Report what you saw</a>
+          </section>
         </section>
       </main>
 
