@@ -3,23 +3,27 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#102a43">
+    <meta name="theme-color" content="#032d63">
     <meta name="description" content="Find a location in New York City and see what has actually happened to it: measured water depth, nearby drainage complaints, six years of rainfall, and a live forecast checked against all three.">
-    <title>PLUVIA | What the sensors recorded near you</title>
+    <title>PLUVIA | Know the Impact, Not Just the Rain.</title>
+    <link rel="icon" type="image/png" href="favicon.png?v=20">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png?v=20">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="PLUVIA | Know the Impact, Not Just the Rain.">
+    <meta property="og:description" content="Pick a street in New York City and see what water has actually done there: measured depth, nearby drainage complaints, six years of rainfall, and a live forecast checked against all three.">
+    <meta property="og:image" content="og-image.png?v=20">
+    <meta name="twitter:card" content="summary_large_image">
     <link rel="stylesheet" href="vendor/leaflet/leaflet.css?v=1.9.4">
-    <link rel="stylesheet" href="styles.css?v=15">
+    <link rel="stylesheet" href="styles.css?v=20">
     <script src="vendor/leaflet/leaflet.js?v=1.9.4" defer></script>
-    <script src="app.js?v=15" defer></script>
+    <script src="app.js?v=20" defer></script>
   </head>
   <body>
     <div class="page-shell">
       <header class="site-header">
         <a class="brand" href="#top" aria-label="PLUVIA home">
-          <span class="brand-mark" aria-hidden="true">P</span>
-          <span class="brand-copy">
-            <strong>PLUVIA</strong>
-            <span>Know the Impact, Not Just the Rain.</span>
-          </span>
+          <img class="brand-lockup" src="brand-lockup.png?v=20" alt="PLUVIA" width="728" height="271" decoding="async">
+          <span class="brand-tagline">Know the Impact,<br>Not Just the Rain.</span>
         </a>
         <span class="header-note">New York City &middot; FloodNet, 311 and rainfall records</span>
       </header>
@@ -34,10 +38,17 @@
           </p>
           <form class="locate-row" id="locate-form" autocomplete="off">
             <label class="visually-hidden" for="place-search">ZIP code, borough, or sensor name</label>
-            <input id="place-search" class="locate-input" type="search" placeholder="ZIP code, borough, sensor name, or lat, lon" inputmode="search">
-            <button class="load-button" type="submit">Find nearest sensors</button>
+            <input id="place-search" class="locate-input" type="search" placeholder="Type a NYC street, ZIP code or borough" inputmode="search">
+            <button class="ghost-button" type="submit">Find it on the map</button>
             <button class="ghost-button" type="button" id="clear-pin">Clear pin</button>
           </form>
+          <div id="watch-add-row" class="watch-add-row is-primary" hidden>
+            <button class="load-button" type="button" id="watch-add">Watch this location</button>
+            <span class="load-hint">This is the one that does the work. PLUVIA keeps this place, checks the rain
+              forecast for it, and warns you before the next storm.
+              <i class="info-dot" tabindex="0" role="img" aria-label="What watching does" title="PLUVIA saves this place in your browser, pulls the public rain forecast for it, and compares every forecast day against what the nearest measured record says happened here on comparable rain days. Nothing is sent anywhere unless you press the email button.">i</i>
+            </span>
+          </div>
           <p id="load-status" class="load-status" role="status" aria-live="polite">Loading the frozen snapshot&hellip;</p>
         </section>
 
@@ -111,12 +122,6 @@
                     <option value="floods">Sort by recorded floods</option>
                   </select>
                 </label>
-              </div>
-              <div id="watch-add-row" class="watch-add-row" hidden>
-                <button class="load-button" type="button" id="watch-add">Watch this location</button>
-                <span class="load-hint">Get warned here before the next storm.
-                  <i class="info-dot" tabindex="0" role="img" aria-label="What watching does" title="PLUVIA saves this place in your browser, pulls the public rain forecast for it, and compares every forecast day against what the nearest sensor recorded on comparable rain days. Nothing is sent anywhere.">i</i>
-                </span>
               </div>
               <details class="nearest-details">
                 <summary>Show the sensors ranked around this point</summary>
@@ -204,7 +209,7 @@
       </main>
 
       <footer class="site-footer">
-        <span>PLUVIA</span>
+        <img class="footer-wordmark" src="brand-wordmark.png?v=20" alt="PLUVIA" width="518" height="82" decoding="async">
         <span>Historical evidence, shown with its limits.</span>
       </footer>
     </div>

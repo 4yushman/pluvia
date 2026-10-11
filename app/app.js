@@ -140,7 +140,7 @@
   let tileWatchdog = null;
   let basemapGeneration = 0;
   const lastAssessment = {};
-  let watchGeneration = 0;
+  let watchState = [];
 
   window.addEventListener("error", (event) => {
     const detail = event && event.message ? event.message : "unknown error";
@@ -200,11 +200,11 @@
   locateForm.addEventListener("submit", onSearch);
   sortSelect.addEventListener("change", renderNearest);
   watchAddButton.addEventListener("click", addWatch);
-  watchRefresh.addEventListener("click", renderWatchlist);
+  watchRefresh.addEventListener("click", () => renderWatchlist(true));
   watchListEl.addEventListener("click", onWatchListClick);
-  scenarioDuration.addEventListener("change", renderScenario);
-  scenarioRain.addEventListener("change", renderScenario);
-  recordsToggle.addEventListener("click", () => {
+  if (scenarioDuration) scenarioDuration.addEventListener("change", renderScenario);
+  if (scenarioRain) scenarioRain.addEventListener("change", renderScenario);
+  if (recordsToggle) recordsToggle.addEventListener("click", () => {
     const open = scenarioRecords.hidden;
     scenarioRecords.hidden = !open;
     recordsToggle.setAttribute("aria-expanded", String(open));
@@ -904,9 +904,67 @@
     return result;
   }
 
+  const COMPLAINTS_ENDPOINT = "https://data.cityofnewyork.us/resource/erm2-nwe9.json";
+  const COMPLAINT_RADIUS_M = 300;
+
+  function fetchComplaints(latitude, longitude) {
+    const where = `within_circle(location,${latitude.toFixed(5)},${longitude.toFixed(5)},${COMPLAINT_RADIUS_M})`
+      + " AND complaint_type in('Sewer','Sewer Maintenance')";
+    const url = `${COMPLAINTS_ENDPOINT}?$select=${encodeURIComponent("unique_key,created_date,closed_date,descriptor,status")}`
+      + `&$where=${encodeURIComponent(where)}`
+      + `&$order=${encodeURIComponent("created_date DESC")}&$limit=1000`;
+    return withDeadline(
+      fetch(url, { cache: "no-store" }).then((response) => {
+        if (!response.ok) throw new Error(`311 service answered ${response.status}`);
+        return response.json();
+      }),
+      FORECAST_TIMEOUT_MS
+    ).then((rows) => {
+      const list = Array.isArray(rows) ? rows : [];
+      const cutoff = Date.now() - 365 * 24 * 3600 * 1000;
+      const recent = list.filter((row) => new Date(row.created_date).getTime() >= cutoff);
+      const open = list.filter((row) => String(row.status || "").toLowerCase() !== "closed");
+      const tally = {};
+      list.forEach((row) => {
+        const key = String(row.descriptor || "Unspecified").split("(")[0].trim();
+        tally[key] = (tally[key] || 0) + 1;
+      });
+      const commonest = Object.entries(tally).sort((a, b) => b[1] - a[1])[0] || null;
+      const closed = list.filter((row) => row.closed_date).sort((a, b) =>
+        new Date(b.closed_date) - new Date(a.closed_date))[0] || null;
+      return {
+        total: list.length,
+        lastYear: recent.length,
+        open: open.length,
+        commonest: commonest ? { label: commonest[0], count: commonest[1] } : null,
+        lastCleared: closed ? closed.closed_date : null
+      };
+    });
+  }
+
+  function withDeadline(promise, ms) {
+    // AbortController is asked politely first, but settlement is guaranteed here:
+    // whatever the network does, this promise resolves or rejects within ms.
+    return new Promise((resolve, reject) => {
+      let done = false;
+      const timer = window.setTimeout(() => {
+        if (done) return;
+        done = true;
+        reject(new Error(`the forecast service did not answer within ${Math.round(ms / 1000)} seconds`));
+      }, ms);
+      promise.then(
+        (value) => { if (done) return; done = true; window.clearTimeout(timer); resolve(value); },
+        (error) => { if (done) return; done = true; window.clearTimeout(timer); reject(error); }
+      );
+    });
+  }
+
   function fetchForecast(latitude, longitude) {
     const url = `${FORECAST_ENDPOINT}?latitude=${latitude.toFixed(4)}&longitude=${longitude.toFixed(4)}`
-      + "&daily=precipitation_sum,precipitation_hours&timezone=America%2FNew_York&forecast_days=7";
+      + "&current=temperature_2m,precipitation"
+      + "&hourly=precipitation"
+      + "&daily=precipitation_sum,precipitation_hours"
+      + "&timezone=America%2FNew_York&forecast_days=7";
     // Without a deadline one unreachable request leaves every card spinning,
     // so the request is abandoned after FORECAST_TIMEOUT_MS and reported.
     const controller = typeof AbortController === "function" ? new AbortController() : null;
@@ -924,17 +982,86 @@
       .then((payload) => {
         const daily = payload && payload.daily;
         if (!daily || !Array.isArray(daily.time)) throw new Error("forecast payload had no daily block");
-        return daily.time.map((date, position) => ({
+        const days = daily.time.map((date, position) => ({
           date,
           mm: Number(daily.precipitation_sum[position]) || 0,
           hours: Number(daily.precipitation_hours[position]) || 0
         }));
+        const block = payload.hourly;
+        const hours = block && Array.isArray(block.time)
+          ? block.time.map((iso, position) => ({ iso, mm: Number(block.precipitation[position]) || 0 }))
+          : [];
+        const now = payload.current || {};
+        return {
+          days,
+          hours,
+          current: {
+            iso: now.time || null,
+            tempC: now.temperature_2m === undefined ? null : Number(now.temperature_2m),
+            mmNow: now.precipitation === undefined ? null : Number(now.precipitation)
+          }
+        };
       });
+  }
+
+  function nearestUsableSensor(latitude, longitude) {
+    let best = null;
+    let bestKm = Infinity;
+    for (const item of sensors) {
+      if (item.tidal) continue;
+      if (!item.history || !item.history.floodDays) continue;
+      const km = haversineKm(latitude, longitude, item.latitude, item.longitude);
+      if (km < bestKm) { bestKm = km; best = item; }
+    }
+    return best ? { ...best, distanceKm: bestKm } : null;
+  }
+
+  function peakWindow(hours, span) {
+    if (!hours.length) return null;
+    let best = { total: 0, start: 0 };
+    for (let i = 0; i + span <= hours.length; i += 1) {
+      let total = 0;
+      for (let j = i; j < i + span; j += 1) total += hours[j].mm;
+      if (total > best.total) best = { total, start: i };
+    }
+    if (best.total <= 0) return null;
+    return { total: best.total, span, from: hours[best.start].iso, to: hours[best.start + span - 1].iso };
+  }
+
+  function clockLabel(iso) {
+    if (!iso) return "[UNKNOWN]";
+    const when = new Date(iso);
+    if (Number.isNaN(when.getTime())) return String(iso);
+    return when.toLocaleString("en-US", { weekday: "short", hour: "numeric", minute: "2-digit", hour12: true });
+  }
+
+  function rainSparkline(hours) {
+    const slice = hours.slice(0, 48);
+    if (!slice.length) return "";
+    const peak = Math.max(...slice.map((item) => item.mm), 1);
+    const width = 100;
+    const step = width / slice.length;
+    const bars = slice.map((item, index) => {
+      const height = (item.mm / peak) * 46;
+      const wet = item.mm > 0;
+      return `<rect x="${(index * step).toFixed(2)}" y="${(48 - height).toFixed(2)}" width="${(step * 0.82).toFixed(2)}"
+        height="${Math.max(height, wet ? 1 : 0).toFixed(2)}" fill="${wet ? "#1b7fa8" : "#d8e4ea"}"></rect>`;
+    }).join("");
+    return `<figure class="rain-chart">
+      <svg viewBox="0 0 100 52" preserveAspectRatio="none" role="img"
+        aria-label="Hour by hour rainfall for the next 48 hours">${bars}</svg>
+      <figcaption>Next 48 hours, one bar per hour. Tallest bar is ${formatNumber(peak, 1)} mm.
+        Source: ${FORECAST_CREDIT}.</figcaption>
+    </figure>`;
   }
 
   function watchSensorFor(entry) {
     const exact = sensors.find((item) => item.sensorId === entry.sensorId);
-    if (exact) return exact;
+    if (exact && !exact.tidal) {
+      const km = haversineKm(entry.latitude, entry.longitude, exact.latitude, exact.longitude);
+      if (km <= 5) return { ...exact, distanceKm: km };
+    }
+    return nearestUsableSensor(entry.latitude, entry.longitude);
     let best = null;
     let bestKm = Infinity;
     for (const item of sensors) {
@@ -950,8 +1077,7 @@
       setStatus("Drop a pin or search for a place first, then watch it.", true);
       return;
     }
-    const ranked = rankedSensors().filter((item) => !item.tidal && item.history && item.history.floodDays);
-    const chosen = ranked[0] || rankedSensors()[0];
+    const chosen = nearestUsableSensor(pin.latitude, pin.longitude);
     if (!chosen) {
       setStatus("No sensor near this point can be watched.", true);
       return;
@@ -963,8 +1089,10 @@
       renderWatchlist();
       return;
     }
-    const label = chosen.streetName || chosen.sensorName || "Saved place";
-    list.push({
+    const label = (placeSearch && placeSearch.value.trim())
+      || (pin.label && String(pin.label).trim())
+      || `${pin.latitude.toFixed(4)}, ${pin.longitude.toFixed(4)}`;
+    list.unshift({
       id,
       label,
       latitude: pin.latitude,
@@ -1058,149 +1186,195 @@
       </div>`;
   }
 
-  function watchCardMarkup(entry, sensor, days, failure, pending) {
+  function watchCardMarkup(item) {
+    const entry = item.entry;
+    const sensor = item.sensor;
     const safeId = escapeHtml(entry.id);
+    const away = sensor && sensor.distanceKm !== undefined
+      ? ` &middot; ${formatNumber(sensor.distanceKm, 1)} km away`
+      : "";
     const head = `<div class="watch-card-head">
         <div>
           <h3>${escapeHtml(entry.label)}</h3>
-          <p class="watch-sub">Nearest usable sensor: ${escapeHtml(sensor ? sensor.sensorName : "[UNKNOWN]")}
-            &middot; ${escapeHtml(formatNumber(entry.latitude, 4))}, ${escapeHtml(formatNumber(entry.longitude, 4))}</p>
+          <p class="watch-sub">${escapeHtml(formatNumber(entry.latitude, 4))}, ${escapeHtml(formatNumber(entry.longitude, 4))}
+            &middot; nearest measured record: ${escapeHtml(sensor ? sensor.sensorName : "none within reach")}${away}</p>
         </div>
         <div class="watch-card-actions">
-          <button type="button" class="ghost-button is-small" data-drill="${safeId}">Run a drill</button>
+          <button type="button" class="ghost-button is-small" data-drill="${safeId}">Simulate a storm</button>
           <button type="button" class="ghost-button is-small" data-remove="${safeId}">Stop watching</button>
         </div>
       </div>`;
 
-    if (pending) {
+    // What the city has been told here. This needs no sensor, so it answers
+    // everywhere in New York City, not only at the 491 measured points.
+    let drainage = '<p class="watch-line is-muted">Reading the city drainage record for this spot\u2026</p>';
+    if (item.complaints && item.complaints.error) {
+      drainage = `<p class="watch-line is-muted">The city drainage record could not be read. ${escapeHtml(item.complaints.error)}.</p>`;
+    } else if (item.complaints) {
+      const c = item.complaints;
+      drainage = c.total === 0
+        ? `<p class="watch-line">No drainage complaint has been filed within ${COMPLAINT_RADIUS_M} m of this point.</p>`
+        : `<p class="watch-line"><strong>${c.total}</strong> drainage complaint${c.total === 1 ? "" : "s"} within
+           ${COMPLAINT_RADIUS_M} m, ${c.lastYear} in the last twelve months, ${c.open} still open.
+           ${c.commonest ? `Commonest report: ${escapeHtml(c.commonest.label)} (${c.commonest.count}).` : ""}
+           ${c.lastCleared ? `Last one closed ${escapeHtml(formatDayOnly(c.lastCleared))}.` : ""}
+           <span class="watch-source">NYC 311, live</span></p>`;
+    }
+
+    if (item.pending && !item.days.length) {
       return `<article class="watch-card">${head}
-        <div class="watch-banner is-quiet">
-          <span class="watch-banner-flag">Checking</span>
-          <p>Reading the public rain forecast for the next seven days. The recorded history for
-          ${escapeHtml(sensor ? sensor.sensorName : "this place")} is already loaded, so you can press
-          Run a drill right now without waiting.</p>
-        </div>
+        <div class="watch-banner is-quiet"><span class="watch-banner-flag">Checking</span>
+        <p>Reading the live rain forecast for this point. Press Simulate a storm to see the rule run now.</p></div>
+        ${drainage}
         <div class="watch-drill" data-drill-target="${safeId}" hidden></div>
       </article>`;
     }
 
-    if (failure) {
+    if (item.failure) {
+      const standIn = sensor
+        ? dayRowMarkup({ ...assessDay(sensor, DRILL_MM, DRILL_HOURS), date: `If ${DRILL_MM} mm fell` }, sensor, true)
+        : "";
       return `<article class="watch-card">${head}
-        <p class="watch-failure">The public forecast service could not be reached from this browser, so no
-        forecast is claimed for this place. ${escapeHtml(failure)}. The recorded history below the map is
-        unaffected, and the drill button still shows how the rule behaves.</p>
+        <p class="watch-failure">No forecast could be read, so none is claimed. ${escapeHtml(item.failure)}.</p>
+        ${standIn}${drainage}
         <div class="watch-drill" data-drill-target="${safeId}" hidden></div>
       </article>`;
     }
 
     if (!sensor) {
       return `<article class="watch-card">${head}
-        <p class="watch-failure">No sensor in this snapshot can be matched to this place.</p></article>`;
+        <p class="watch-failure">No measured flood record is close enough to this point, so PLUVIA will not put a
+        depth or a percentage on it. The city drainage record below is still real evidence for this spot.</p>
+        ${drainage}
+      </article>`;
     }
 
-    const triggered = days.filter((day) => day.level === "warning");
-    const watched = days.filter((day) => day.level === "watch");
+    const now = item.current || {};
+    const nowLine = `<p class="watch-now"><strong>Right now in New York City</strong>
+      ${now.iso ? `&middot; ${escapeHtml(clockLabel(now.iso))}` : ""}
+      ${now.tempC === null || now.tempC === undefined ? "" : `&middot; ${formatNumber(now.tempC, 0)} &deg;C`}
+      &middot; ${now.mmNow ? `${formatNumber(now.mmNow, 1)} mm falling this hour` : "no rain falling"}</p>`;
+
+    const peak = item.peak3h;
+    const whenLine = peak
+      ? `<p class="watch-line"><strong>Heaviest stretch ahead:</strong> ${formatNumber(peak.total, 1)} mm between
+         ${escapeHtml(clockLabel(peak.from))} and ${escapeHtml(clockLabel(peak.to))}, New York time.</p>`
+      : `<p class="watch-line">No rain at all is forecast for the next 48 hours here.</p>`;
+
+    const triggered = item.days.filter((day) => day.level === "warning");
+    const watched = item.days.filter((day) => day.level === "watch");
     let banner;
     if (triggered.length) {
       const first = triggered[0];
-      const depthLine = first.depth === null
-        ? ""
-        : ` When water arrives here it usually reaches <strong>${formatNumber(first.depth, 1)} in
-          (${inchesToCm(first.depth)} cm)</strong>, ${escapeHtml(first.band.label)}, and the deepest ever recorded
-          at this sensor is ${formatNumber(sensor.history.maxDepthIn, 1)} in
+      const depthLine = first.depth === null ? "" :
+        ` Water here usually reaches <strong>${formatNumber(first.depth, 1)} in (${inchesToCm(first.depth)} cm)</strong>,
+          ${escapeHtml(first.band.label)}; the deepest ever measured is ${formatNumber(sensor.history.maxDepthIn, 1)} in
           (${inchesToCm(sensor.history.maxDepthIn)} cm).`;
-      banner = `<div class="watch-banner is-warning">
-          <span class="watch-banner-flag">Early warning</span>
-          <p><strong>${escapeHtml(dayLabel(first.date))}</strong>: ${formatNumber(first.mm, 1)} mm of rain is forecast.
-          At ${escapeHtml(sensor.sensorName)}, ${first.sensorDays} of ${first.cityDays} comparable past rain days
-          ended with standing water, which is ${Math.round(first.rate * 100)} percent.${depthLine}
-          A site this deep needs only ${Math.round(first.band.warnRate * 100)} percent to be flagged, so this
-          place is flagged.</p>
-        </div>`;
+      banner = `<div class="watch-banner is-warning"><span class="watch-banner-flag">Early warning</span>
+        <p><strong>${escapeHtml(dayLabel(first.date))}</strong>: ${formatNumber(first.mm, 1)} mm forecast.
+        ${first.sensorDays} of the ${first.cityDays} days that reached ${first.threshold} mm since this record began
+        ended with standing water here, which is <strong>${Math.round(first.rate * 100)} percent</strong>.${depthLine}</p></div>`;
     } else if (watched.length) {
       const first = watched[0];
-      banner = `<div class="watch-banner is-watch">
-          <span class="watch-banner-flag">Worth watching</span>
-          <p><strong>${escapeHtml(dayLabel(first.date))}</strong>: ${formatNumber(first.mm, 1)} mm forecast.
-          ${first.sensorDays} of ${first.cityDays} comparable past days ended with water here
-          (${Math.round(first.rate * 100)} percent). That is below the warning trigger of
-          ${Math.round(TRIGGER_RATE * 100)} percent.</p>
-        </div>`;
+      banner = `<div class="watch-banner is-watch"><span class="watch-banner-flag">Worth watching</span>
+        <p><strong>${escapeHtml(dayLabel(first.date))}</strong>: ${formatNumber(first.mm, 1)} mm forecast.
+        ${Math.round(first.rate * 100)} percent of comparable past days ended with water here, below the warning bar.</p></div>`;
     } else {
-      banner = `<div class="watch-banner is-quiet">
-          <span class="watch-banner-flag">Quiet</span>
-          <p>No day in the next seven reaches both ${TRIGGER_MM} mm of forecast rain and the
-          ${Math.round(TRIGGER_RATE * 100)} percent record trigger at ${escapeHtml(sensor.sensorName)}.
-          The watch stays on and nothing is sent.</p>
-        </div>`;
+      banner = `<div class="watch-banner is-quiet"><span class="watch-banner-flag">Clear</span>
+        <p>Nothing in the next seven days reaches both ${TRIGGER_MM} mm of rain and this location's own record bar.
+        The watch stays on and nothing is sent.</p></div>`;
     }
 
-    const ladder = DEPTH_BANDS.map((item) => {
-      const active = days.length && days[0].band && days[0].band.tier === item.tier;
-      const need = item.warnRate === null
-        ? "never warned on depth alone"
-        : `needs ${Math.round(item.warnRate * 100)}% of comparable days`;
-      return `<li${active ? ' class="is-active"' : ""}>${item.minIn === 0 ? "under 2" : `${item.minIn}+`} in
-        &middot; ${escapeHtml(item.label)} &middot; ${need}</li>`;
-    }).join("");
     const emailButton = triggered.length && ALERT_ENDPOINT
       ? `<div class="watch-email"><button type="button" class="load-button" data-email="${safeId}">Email me this warning</button>
-          <span class="load-hint">Sent through the PLUVIA alert stack on AWS to the confirmed address.</span>
+          <span class="load-hint">Delivered by Amazon SNS to the confirmed address.</span>
           <span class="watch-email-status" data-email-status="${safeId}"></span></div>`
       : "";
-    return `<article class="watch-card">${head}${banner}${emailButton}
-      <div class="watch-days">${days.map((day) => dayRowMarkup(day, sensor, false)).join("")}</div>
+
+    const ladder = DEPTH_BANDS.map((band) => {
+      const active = item.days.length && item.days[0].band && item.days[0].band.tier === band.tier;
+      const need = band.warnRate === null ? "never warned on depth alone" : `needs ${Math.round(band.warnRate * 100)}%`;
+      return `<li${active ? ' class="is-active"' : ""}>${band.minIn === 0 ? "under 2" : `${band.minIn}+`} in
+        &middot; ${escapeHtml(band.label)} &middot; ${need}</li>`;
+    }).join("");
+
+    return `<article class="watch-card">${head}${banner}${nowLine}${whenLine}
+      ${rainSparkline(item.hours)}
+      ${drainage}${emailButton}
       <div class="watch-drill" data-drill-target="${safeId}" hidden></div>
-      <details class="watch-rule-box">
-        <summary>How this warning is decided</summary>
-        <p>The forecast has to reach ${TRIGGER_MM} mm, and this sensor's own record has to clear the bar for how
-        deep the water usually gets here. Deeper places are flagged on far fewer repeats.</p>
+      <details class="watch-rule-box"><summary>Day by day, and how this is decided</summary>
+        <div class="watch-days">${item.days.map((day) => dayRowMarkup(day, sensor, false)).join("")}</div>
+        <p>A warning needs ${TRIGGER_MM} mm of forecast rain and this location's own record to clear the bar set by
+        how deep the water usually gets here.</p>
         <ul class="watch-ladder">${ladder}</ul>
-        <p>Forecast by ${FORECAST_CREDIT}. Every depth and percentage is counted from the stored snapshot.
-        Nothing is modelled or estimated.</p>
+        <p>Rain forecast by ${FORECAST_CREDIT}. Drainage complaints from NYC 311, read live. Depth and percentages
+        counted from the stored FloodNet snapshot. Nothing is modelled or estimated.</p>
       </details>
     </article>`;
   }
 
-  function renderWatchlist() {
+
+  function paintWatchlist() {
+    watchListEl.innerHTML = watchState
+      .map((item) => watchCardMarkup(item))
+      .join("");
+    const waiting = watchState.filter((item) => item.pending).length;
+    const flagged = watchState.filter((item) => item.days.some((day) => day.level === "warning")).length;
+    const failed = watchState.filter((item) => item.failure).length;
+    const parts = [`${watchState.length} place${watchState.length === 1 ? "" : "s"} watched`];
+    if (waiting) parts.push(`${waiting} still reading the forecast`);
+    if (flagged) parts.push(`${flagged} flagged in the next seven days`);
+    if (failed) parts.push(`${failed} could not reach the forecast service`);
+    watchStatus.textContent = `${parts.join(" \u00b7 ")}.`;
+  }
+
+  function renderWatchlist(forceRefresh) {
     const list = loadWatchlist();
     watchPanel.hidden = list.length === 0;
     if (!list.length) {
+      watchState = [];
       watchListEl.innerHTML = "";
       watchStatus.textContent = "";
       return;
     }
-    // Each place is painted immediately from the stored record and upgraded when its
-    // own forecast lands. No card can ever be held hostage by another card's request.
-    watchGeneration += 1;
-    const generation = watchGeneration;
-    const state = list.map((entry) => {
+    // Results already fetched are carried across re-renders. Without this a card
+    // that finished could be reset to pending by an unrelated repaint.
+    const prior = new Map(watchState.map((item) => [item.entry.id, item]));
+    watchState = list.map((entry) => {
+      const kept = prior.get(entry.id);
+      if (kept && !forceRefresh) {
+        kept.entry = entry;
+        return kept;
+      }
       let sensor = null;
       try { sensor = watchSensorFor(entry); } catch (error) { sensor = null; }
-      return { entry, sensor, days: [], failure: null, pending: true };
+      return { entry, sensor, days: [], failure: null, pending: true, started: false,
+        current: null, hours: [], peak3h: null, peak24h: null, complaints: null };
     });
+    paintWatchlist();
 
-    const paint = () => {
-      if (generation !== watchGeneration) return;
-      watchListEl.innerHTML = state
-        .map((item) => watchCardMarkup(item.entry, item.sensor, item.days, item.failure, item.pending))
-        .join("");
-      const waiting = state.filter((item) => item.pending).length;
-      const flagged = state.filter((item) => item.days.some((day) => day.level === "warning")).length;
-      const failed = state.filter((item) => item.failure).length;
-      const parts = [`${state.length} place${state.length === 1 ? "" : "s"} watched`];
-      if (waiting) parts.push(`${waiting} still reading the forecast`);
-      if (flagged) parts.push(`${flagged} flagged in the next seven days`);
-      if (failed) parts.push(`${failed} could not reach the forecast service`);
-      watchStatus.textContent = `${parts.join(" \u00b7 ")}.`;
-    };
-    paint();
-
-    state.forEach((item) => {
+    watchState.forEach((item) => {
+      if (item.started && !forceRefresh) return;
+      item.started = true;
+      item.pending = true;
+      // The drainage record is fetched beside the forecast. Neither can block the other,
+      // and a place with no sensor still gets its complaint history.
       Promise.resolve()
-        .then(() => fetchForecast(item.entry.latitude, item.entry.longitude))
-        .then((days) => {
-          item.days = days.map((day) => ({ ...assessDay(item.sensor, day.mm, day.hours), date: day.date }));
+        .then(() => fetchComplaints(item.entry.latitude, item.entry.longitude))
+        .then((summary) => { item.complaints = summary; })
+        .catch((error) => { item.complaints = { error: error && error.message ? error.message : String(error) }; })
+        .then(() => paintWatchlist());
+
+      withDeadline(
+        Promise.resolve().then(() => fetchForecast(item.entry.latitude, item.entry.longitude)),
+        FORECAST_TIMEOUT_MS
+      )
+        .then((forecast) => {
+          item.days = forecast.days.map((day) => ({ ...assessDay(item.sensor, day.mm, day.hours), date: day.date }));
+          item.current = forecast.current;
+          item.hours = forecast.hours;
+          item.peak3h = peakWindow(forecast.hours, 3);
+          item.peak24h = peakWindow(forecast.hours, 24);
           item.failure = null;
           const hit = item.days.find((day) => day.level === "warning");
           if (hit) lastAssessment[item.entry.id] = hit;
@@ -1209,10 +1383,14 @@
           item.days = [];
           item.failure = error && error.message ? error.message : String(error);
         })
-        .then(() => { item.pending = false; paint(); })
+        .then(() => {
+          item.pending = false;
+          paintWatchlist();
+        })
         .catch(() => { item.pending = false; });
     });
   }
+
 
 
   function sendWarningEmail(id, button) {
@@ -1273,6 +1451,7 @@
   }
 
   function renderScenario() {
+    if (!scenarioVerdict || !scenarioRain || !scenarioDuration) return;
     const sensor = selectedSensor();
     if (!sensor) {
       scenarioPanel.hidden = true;
@@ -1439,6 +1618,7 @@
   }
 
   function renderRecords(history) {
+    if (!scenarioVerdict || !scenarioRain || !scenarioDuration) return;
     renderRecordsInner(history);
     const sensor = selectedSensor();
     if (sensor && sensor.drainage && Array.isArray(sensor.drainage.records) && sensor.drainage.records.length) {
